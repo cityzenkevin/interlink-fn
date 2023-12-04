@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@keyframes ping {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+        50% {
+            transform: scale(1.06);
+        }
+        }
+    
+        /* Add a custom class for infinite animation */
+        .animate-ping {
+            animation: ping 3s infinite;
+        }
