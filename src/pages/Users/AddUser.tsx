@@ -7,7 +7,7 @@ import Modal from "../../components/Modal";
 import List from "../../components/List";
 import { userFields } from "../../constants/formFields";
 import Input from "../../components/Input";
-import usersApi from "../../api/users.api";
+import usersApi from "../../services/users.api";
 
 const Roles = [
   "Human Resource",

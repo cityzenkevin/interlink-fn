@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-import { loginUser as login } from "../../api/auth.api";
+import { loginUser as login } from "../../services/auth.api";
 
 interface InitialState {
   isLoading: boolean;
@@ -29,25 +29,12 @@ export const authSlice = createSlice({
     builder.addCase(login.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(
-      login.fulfilled,
-      (
-        state,
-        action: PayloadAction<{
-          user: any;
-          tokens: {
-            access: {
-              token: string;
-            };
-            refresh: string;
-          };
-        }>
-      ) => {
-        localStorage.setItem("auth_token", action.payload.tokens.access.token);
-        state.isLoading = false;
-        state.user = action.payload.user;
-      }
-    );
+    builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
+      console.log(action.payload);
+      localStorage.setItem("auth_token", action.payload.tokens.accessToken);
+      state.isLoading = false;
+      state.user = action.payload.user;
+    });
     builder.addCase(login.rejected, (state, action: any) => {
       state.isLoading = false;
       state.error = action.payload.message;

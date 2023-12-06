@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-import usersApi from "../../api/users.api";
+import usersApi from "../../services/users.api";
 
 interface InitialState {
   isLoading: boolean;

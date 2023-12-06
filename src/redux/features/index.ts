@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { handleErrorResponse, localUrl } from "../../api";
+import { handleErrorResponse, localUrl } from "../../services";
 
 interface ApiState {
   data: any;

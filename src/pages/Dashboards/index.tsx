@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from "../../redux/hook";
 
 import Card from "../../components/Card";
 import { UserContext } from "../../hooks/useAuth";
-import usersApi from "../../api/users.api";
+import usersApi from "../../services/users.api";
 import HrDashboard from "./HrDashboard";
 import EmployeeDashboard from "./EmployeeDashboard";
 import PmDashboard from "./PmDashboard";

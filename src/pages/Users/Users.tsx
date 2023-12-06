@@ -10,7 +10,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { userFields } from "../../constants/formFields";
 import RemoveModal from "../../components/RemoveModal";
 import { fields } from "../../types";
-import usersApi from "../../api/users.api";
+import usersApi from "../../services/users.api";
 import AddUserModal from "./AddUser";
 import EditUserModal from "./EditUser";
 import { deleteApiData, fetchApiData } from "../../redux/features";

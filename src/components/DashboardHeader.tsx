@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import Logo from "../assets/logoText.png";
+import Logo from "../assets/logoText.jpg";
 import Avatar from "../assets/avatar.png";
 import Sidebar from "./Sidebar";
 import ProfileDropdown from "./ProfileDropdown";
@@ -43,7 +43,7 @@ function DashHeader() {
           <div className="flex items-center  lg:w-full">
             <Link to="/" className="flex flex-row lg:px-5">
               <img
-                className="cursor-pointer w-56  mr-2"
+                className="cursor-pointer w-60  -mr-20 bg-gray-400"
                 src={Logo}
                 alt="logo"
               />

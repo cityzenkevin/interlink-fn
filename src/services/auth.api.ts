@@ -8,8 +8,7 @@ export const loginUser = createAsyncThunk(
   async (myFields: Login, { rejectWithValue }) => {
     try {
       const res = await axios.post(`${localUrl}/auth/login`, myFields);
-      localStorage.setItem("accessToken", res.data.tokens.access.token);
-      console.log(res.data.tokens.access);
+      localStorage.setItem("accessToken", res.data.tokens.accessToken);
       return res.data;
     } catch (error) {
       return rejectWithValue(handleErrorResponse(error));
@@ -45,4 +44,3 @@ export const resetPassword = createAsyncThunk(
     }
   }
 );
-

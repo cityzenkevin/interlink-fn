@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/hook";
 
 import Card from "../../components/Card";
-import usersApi from "../../api/users.api";
+import usersApi from "../../services/users.api";
 import { fetchApiData } from "../../redux/features";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";

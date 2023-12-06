@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { loginFields } from "../constants/formFields";
 import Input from "../components/Input";
-import { loginUser } from "../api/auth.api";
+import { loginUser } from "../services/auth.api";
 import { UserContext } from "../hooks/useAuth";
 
 import logo from "../assets/logo.png";
@@ -27,7 +27,7 @@ const Login = () => {
   const { login } = useContext(UserContext);
 
   const [loginState, setLoginState] = useState(fieldState);
-  const { error, user } = useAppSelector((state) => state.login);
+  const { error, user, isLoading } = useAppSelector((state) => state.login);
 
   useEffect(() => {
     if (user) {
@@ -40,7 +40,7 @@ const Login = () => {
     e.preventDefault();
 
     const myFields: LoginI = {
-      email: loginState.email as string,
+      username: loginState.email as string,
       password: loginState.password as string,
     };
 
@@ -51,8 +51,8 @@ const Login = () => {
     <div className="bg-gray-200 min-h-full   h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="bg-white max-w-md mb-10 w-full space-y-4 border p-6 rounded shadow-md">
         <div className="flex flex-col justify-center items-center ">
-          <div className="mx-auto border-2 border-primary flex  items-center justify-center  shadow-sm">
-            <img src={logo} alt="" className="w-44" />
+          <div className="mx-auto flex  items-center justify-center  shadow-sm">
+            <img src={logo} alt="" className="w-24" />
           </div>
         </div>
         <div
@@ -100,7 +100,30 @@ const Login = () => {
             type="submit"
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primaryHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary "
           >
-            {t("Login")}
+            {isLoading ? (
+              <svg
+                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                ></path>
+              </svg>
+            ) : (
+              t("Login")
+            )}
           </button>
         </form>
       </div>

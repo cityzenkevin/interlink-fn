@@ -7,7 +7,7 @@ const customClassDefaultProps = {
 } as DefaultProps;
 
 export interface Login {
-  email: string;
+  username: string;
   password: string;
 }
 

@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import Modal from "../../components/Modal";
 import { userFields } from "../../constants/formFields";
 import Input from "../../components/Input";
-import usersApi from "../../api/users.api";
+import usersApi from "../../services/users.api";
 
 interface IEditProps extends IProps {
   user: fields;
