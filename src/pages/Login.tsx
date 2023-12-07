@@ -54,6 +54,21 @@ const Login = () => {
           <div className="mx-auto flex  items-center justify-center  shadow-sm">
             <img src={logo} alt="" className="w-24" />
           </div>
+          <div>
+          <div className="flex my-2 items-center justify-between ">
+            <div>
+              Don't have an account?  
+            </div>
+            <div className="text-sm ml-2">
+              <a
+                href="/signup"
+                className="font-medium text-primary hover:primaryHover"
+              >               
+                {t("Sign Up")}
+              </a>
+            </div>
+          </div>
+          </div>
         </div>
         <div
           className={`bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-2 ${

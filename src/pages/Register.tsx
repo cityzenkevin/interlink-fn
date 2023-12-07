@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 import { registerFields } from "../constants/formFields";
 // import { login } from "../../redux/actions/auth.action";
@@ -35,24 +36,25 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-full -mt-20  h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col justify-center items-center ">
-        <div className="mx-auto border flex h-[80px] w-[80px] items-center justify-center rounded-full p-1 shadow-sm">
-          {/* <img src={dropletImg} alt="" className="w-10 h-14  " /> */}
-        </div>
-        <div className="flex items-center justify-between mb-4 mt-2d">
-          <div className="text-sm">
-            <span className="font-medium"> Have an account? </span>
-            <a
-              href="/password/reset"
-              className="font-medium text-primary ml-2 hover:primaryHover"
-            >
-              Login
-            </a>
+    <div className="min-h-full  h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      
+      <div className="bg-white max-w-md w-full space-y-4 border p-3 rounded shadow-sm">
+      <div className="mx-auto flex  items-center justify-center  ">
+        <img src={logo} alt="" className="w-16" />
+      </div>
+        <div className="flex flex-col justify-center items-center ">
+          <div className="flex items-center justify-between mb-4 mt-2d">
+            <div className="text-sm">
+              <span className="font-medium"> Have an account? </span>
+              <a
+                href="/login"
+                className="font-medium text-primary ml-2 hover:primaryHover"
+              >
+                Login
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="bg-white max-w-md w-full space-y-4 border p-3 rounded shadow-sm">
         <form className=" space-y-6" onSubmit={handleSubmit}>
           <div className="">
             {registerFields.map((field) => (
@@ -77,16 +79,6 @@ export default function Register() {
                 }}
               />
             ))}
-          </div>
-          <div className="flex items-center justify-between ">
-            <div className="text-sm">
-              <a
-                href="/password/reset"
-                className="font-medium text-primary hover:primaryHover"
-              >
-                Forgot your password?
-              </a>
-            </div>
           </div>
           <button
             type="submit"

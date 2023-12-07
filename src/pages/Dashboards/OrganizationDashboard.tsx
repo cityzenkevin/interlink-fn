@@ -46,7 +46,7 @@ const options = {
     },
     title: {
       display: true,
-      text: "Income  vs Budget",
+      text: "Applications vs Acceptance",
     },
     scales: {
       y: {
@@ -57,7 +57,7 @@ const options = {
   },
 };
 
-export default function FmDashboard() {
+export default function OrganizationDashboard() {
   const dispatch = useAppDispatch();
   const d = useAppSelector((state) => state.api);
 
@@ -105,12 +105,12 @@ export default function FmDashboard() {
     labels,
     datasets: [
       {
-        label: "Income",
+        label: "Applications",
         data: monthlyIncomeTotals,
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
       {
-        label: "Expense",
+        label: "Acceptance",
         data: monthlyBudgetTotals,
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
@@ -119,25 +119,15 @@ export default function FmDashboard() {
 
   const data = [
     {
-      title: "Income",
-      subtitle: `${totalIncome ?? 0} $`,
-      description: "Total income Amount",
+      title: "Internships",
+      subtitle: `${totalIncome ?? 0} `,
+      description: "Total number of internships",
     },
     {
-      title: "Expenses",
-      subtitle: `${totalExpense ?? 0} $`,
-      description: "Total Expenses",
-    },
-    {
-      title: "Donors",
-      subtitle: `${d?.donor?.length ?? 0}`,
-      description: "Number of Donors",
-    },
-    {
-      title: "Balance",
-      subtitle: `${totalIncome - totalExpense} $`,
-      description: "Total Balance",
-    },
+      title: "Students",
+      subtitle: `${totalExpense ?? 0} `,
+      description: "Total number of students",
+    },    
   ];
 
   useEffect(() => {
@@ -148,8 +138,8 @@ export default function FmDashboard() {
 
   return (
     <div className="ml-6  md:ml-60 mt-12 flex flex-col flex-wrap">
-      <div className="font-semibold text-xl ml-4 text-primary">
-        Financial Manager Dashboard
+      <div className=" mt-2 font-semibold text-xl ml-4 text-primary">
+        Organization Dashboard
       </div>
       <div className="flex ">
         {data.map((item, index) => {
@@ -167,11 +157,11 @@ export default function FmDashboard() {
       <div className="w-[50%] md:w-[60%] ml-4 mt-2 bg-white border shadow-sm p-3">
         <div>
           <div className="font-semibold text-xl flex-col ml-4 text-primary">
-            Income vs Expense
+            Applications vs Acceptance
           </div>
         </div>
         <Bar options={options} data={chartData} />
-      </div>{" "}
+      </div>
     </div>
   );
 }

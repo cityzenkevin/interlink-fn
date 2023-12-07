@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppSelector, useAppDispatch } from "../../redux/hook";
-import { HiPlus, HiOutlinePencil } from "react-icons/hi2";
+import { HiOutlinePencil } from "react-icons/hi2";
 
 import Table from "../../components/Table";
 
-import Button from "../../components/Button";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { userFields } from "../../constants/formFields";
 import RemoveModal from "../../components/RemoveModal";
 import { fields } from "../../types";
 import usersApi from "../../services/users.api";
-import AddUserModal from "./AddUser";
-import EditUserModal from "./EditUser";
+import EditUserModal from "../../sections/users/EditUser";
 import { deleteApiData, fetchApiData } from "../../redux/features";
 
 const fieldState: fields = {};
@@ -20,11 +18,10 @@ userFields.forEach((field) => {
   fieldState[field.id as keyof typeof fieldState] = "";
 });
 
-export default function Users() {
+export default function Students() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  let [isRegisterOpen, setRegisterIsOpen] = useState(false);
   let [isRemoveOpen, setIsRemoveOpen] = useState(false);
   let [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>(fieldState);
@@ -32,10 +29,6 @@ export default function Users() {
   const { users, success, isLoading, error } = useAppSelector(
     (state) => state.users
   );
-
-  const handleModal = () => {
-    setRegisterIsOpen(!isRegisterOpen);
-  };
 
   const handleDeleteModal = () => {
     setIsRemoveOpen(!isRemoveOpen);
@@ -106,10 +99,6 @@ export default function Users() {
 
   return (
     <div className="mt-28">
-      {/* Add New user Modal */}
-      <AddUserModal isOpen={isRegisterOpen} onClose={handleModal} />
-      {/* Add New user Modal */}
-
       {/* Remove user modal */}
       {selectedUser && (
         <RemoveModal
@@ -131,22 +120,11 @@ export default function Users() {
       />
       {/* Edit user Modal */}
 
-      <div className="ml-60 mb-2 flex ">
-        <Button
-          variant="primary"
-          size="md"
-          onClick={handleModal}
-          style=" p-2 flex rounded-sm text-primary border border-primary shadow-sm hover:bg-primary hover:text-white "
-        >
-          <HiPlus className="mt-[2px] w-6 h-5" />
-          Add New User
-        </Button>
-      </div>
       {!isLoading && (
         <Table
           data={users ?? []}
           columns={columns}
-          title="Users"
+          title="Students"
           placeholder="Find by first name, last name, or email"
         />
       )}

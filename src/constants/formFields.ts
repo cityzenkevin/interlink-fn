@@ -150,4 +150,25 @@ export const userFields = [
 ];
 
 
-export const donorFields = [...userFields, {}];
+export const registerFields = [
+  {
+    labelText: "Email",
+    labelFor: "email",
+    id: "email",
+    name: "email",
+    type: "email",
+    autoComplete: "email",
+    isRequired: true,
+    placeholder: "Enter email",
+  },
+  {
+    labelText: "Password",
+    labelFor: "password",
+    id: "password",
+    name: "password",
+    type: "password",
+    autoComplete: "current-password",
+    isRequired: true,
+    placeholder: "Enter password",
+  },
+];

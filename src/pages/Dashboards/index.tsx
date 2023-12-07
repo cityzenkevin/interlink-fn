@@ -5,9 +5,8 @@ import Card from "../../components/Card";
 import { UserContext } from "../../hooks/useAuth";
 import usersApi from "../../services/users.api";
 import HrDashboard from "./HrDashboard";
-import EmployeeDashboard from "./EmployeeDashboard";
-import PmDashboard from "./PmDashboard";
-import FmDashboard from "./FmDashboard";
+import StudentDashboard from "./StudentDashboard";
+import OrganizationDashboard from "./OrganizationDashboard";
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
@@ -21,12 +20,14 @@ export default function Dashboard() {
     },
   ];
   const { user } = useContext(UserContext);
+
   useEffect(() => {
     if (user.role === "ADMIN") {
       dispatch(usersApi.getUsers());
     }
   }, []);
   let DashboardComponent;
+
   switch (user.role) {
     case "ADMIN":
       DashboardComponent = (
@@ -45,18 +46,16 @@ export default function Dashboard() {
         </div>
       );
       break;
-    case "PM":
-      DashboardComponent = <PmDashboard />;
+    case "STUDENT":
+      DashboardComponent = <StudentDashboard />;
       break;
-    case "FM":
-      DashboardComponent = <FmDashboard />;
+    case "ORGANIZATION":
+      DashboardComponent = <OrganizationDashboard />;
       break;
     case "HR":
       DashboardComponent = <HrDashboard />;
       break;
-    case "EMPLOYEE":
-      DashboardComponent = <EmployeeDashboard />;
-      break;
+  
     default:
       break;
   }

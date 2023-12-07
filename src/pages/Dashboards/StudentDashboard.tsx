@@ -1,42 +1,32 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hook";
+import { useAppSelector, useAppDispatch } from "../../redux/hook";
 
 import Card from "../../components/Card";
 import { fetchApiData } from "../../redux/features";
 
-export default function EmployeeDashboard() {
+export default function StudentDashboard() {
   const dispatch = useAppDispatch();
   const d = useAppSelector((state) => state.api);
+
   const data = [
     {
-      title: "Leave requests",
-      subtitle: `${d?.leaveRequests?.length ?? 0}`,
-      description: "Recent Leave requests",
-    },
-    {
-      title: "Projects",
+      title: "Applications",
       subtitle: `${d?.projects?.length ?? 0}`,
-      description: "Recent Projects",
-    },
-    {
-      title: "Tasks",
-      subtitle: `${d?.tasks?.length ?? 0}`,
-      description: "Recent Tasks",
+      description: "Number of applications",
     },
   ];
 
   useEffect(() => {
-    dispatch(fetchApiData("/projects/tasks"));
-    dispatch(fetchApiData("/employees/leaveRequests"));
+    dispatch(fetchApiData("/projects/documents"));
     dispatch(fetchApiData("/projects"));
   }, []);
 
   return (
-    <div className="ml-6 md:ml-96 mt-24 flex flex-col flex-wrap">
+    <div className="ml-6 md:ml-60 mt-16 flex flex-col fixed flex-wrap">
       <div className="font-semibold text-xl ml-4 text-primary">
-        Employee Dashboard
+        Student Dashboard
       </div>
-      <div className="flex ">
+      <div className="flex flex-wrap md:flex-nowrap max-h-[150px]">
         {data.map((item, index) => {
           return (
             <Card
@@ -44,7 +34,7 @@ export default function EmployeeDashboard() {
               title={item.title}
               subtitle={item.subtitle}
               description={item.description}
-              customClass="md:ml-4 mr-2 md:mr-0 border"
+              customClass="md:ml-4 mr-2 md:mr-0 border md:max-w-[20rem] md:min-w-[16rem] "
             />
           );
         })}
