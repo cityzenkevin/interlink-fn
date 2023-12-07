@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "../assets/logoText.jpg";
 import Avatar from "../assets/avatar.png";
-import Sidebar from "./Sidebar";
+import Sidebar from "../layouts/Sidebar";
 import ProfileDropdown from "./ProfileDropdown";
 
 function DashHeader() {

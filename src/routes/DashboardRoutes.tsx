@@ -2,7 +2,7 @@
 import { Suspense, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import DashboardHeader from "../components/DashboardHeader";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../layouts/Sidebar";
 import PrivateRoute from "../utils/ProtectedRoute";
 import Square from "../components/Skeletons/Square";
 import Dashboard from "../pages/Dashboards";

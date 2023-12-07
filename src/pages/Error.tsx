@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import NotFoundImg from "../assets/NotFoundImg.png";
-import NavBar from "../components/NavBar";
+import NavBar from "../layouts/NavBar";
 
 function Error() {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import "../App.css";
-import Footer from "../components/Footer";
+import Footer from "../layouts/Footer";
 import HomepageComponent from "../components/Homepage";
-import NavBar from "../components/NavBar";
+import NavBar from "../layouts/NavBar"
 // import Services from "../components/Services";
 
 function Homepage() {
