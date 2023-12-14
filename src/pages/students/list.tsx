@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppSelector, useAppDispatch } from "../../redux/hook";
-import { HiOutlinePencil } from "react-icons/hi2";
 
 import Table from "../../components/Table";
 
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import { userFields } from "../../constants/formFields";
 import RemoveModal from "../../components/RemoveModal";
 import { fields } from "../../types";
-import usersApi from "../../services/users.api";
 import EditUserModal from "../../sections/users/EditUser";
 import { deleteApiData, fetchApiData } from "../../redux/features";
+import { AiFillDelete } from "react-icons/ai";
+import Spinner from "../../components/Spinner";
 
 const fieldState: fields = {};
 userFields.forEach((field) => {
@@ -24,11 +23,9 @@ export default function Students() {
 
   let [isRemoveOpen, setIsRemoveOpen] = useState(false);
   let [isEditOpen, setIsEditOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<any>(fieldState);
-
-  const { users, success, isLoading, error } = useAppSelector(
-    (state) => state.users
-  );
+  const [selectedStudent, setSelectedStudent] = useState<any>(fieldState);
+  const data = useAppSelector((state) => state.api);
+  const { loading } = data;
 
   const handleDeleteModal = () => {
     setIsRemoveOpen(!isRemoveOpen);
@@ -39,29 +36,33 @@ export default function Students() {
   };
 
   useEffect(() => {
-    dispatch(usersApi.getUsers());
-  }, [success, error]);
-
+    dispatch(fetchApiData("/student"));
+  }, [dispatch]);
+  console.log(data);
   const columns = [
     {
+      Header: "#",
+      accessor: "id",
+    },
+    {
       Header: `${t("First Name")}`,
-      accessor: "firstname",
+      accessor: "user.firstName",
     },
     {
       Header: `${t("Last Name")}`,
-      accessor: "lastname",
+      accessor: "user.lastName",
     },
     {
       Header: "Email",
       accessor: "email",
     },
     {
-      Header: "Role",
-      accessor: "role",
+      Header: "School",
+      accessor: "school",
     },
     {
-      Header: "Gender",
-      accessor: "gender",
+      Header: "Department",
+      accessor: "department",
     },
     {
       Header: "Phone Number",
@@ -72,26 +73,28 @@ export default function Students() {
       accessor: "",
       Cell: ({ row }: any) => (
         <div className="flex justify-evenly">
-          <div
+          {/* <div
             className="flex"
             onClick={() => {
-              setSelectedUser(row.original);
+              setSelectedStudent(row.original);
               setIsEditOpen(true);
             }}
           >
             <HiOutlinePencil className="w-5  text-primary cursor-pointer" />
             <span className="ml-2  cursor-pointer"> {t("Edit")} </span>
-          </div>
-          <div
-            className="flex ml-6"
+          </div> */}
+          <button
+            className="flex ml-6 bg-red-600 text-white px-3 py-1 hover:text-red-500 hover:bg-white hover:border-red-500 border-2 border-red-600 rounded-md
+             transition duration-300 ease-in-out
+            "
             onClick={() => {
-              setSelectedUser(row.original?.id);
+              setSelectedStudent(row.original?.id);
               handleDeleteModal();
             }}
           >
-            <XMarkIcon className="w-5  text-red-500 cursor-pointer" />
-            <span className="ml-2 mb-2 cursor-pointer"> {t("Delete")} </span>
-          </div>
+            <AiFillDelete className="w-5 mt-1 cursor-pointer" />
+            <span className="ml-2  cursor-pointer"> {t("Delete")} </span>
+          </button>
         </div>
       ),
     },
@@ -100,14 +103,14 @@ export default function Students() {
   return (
     <div className="mt-28">
       {/* Remove user modal */}
-      {selectedUser && (
+      {selectedStudent && (
         <RemoveModal
-          title="Delete user"
+          title="Delete student"
           onClose={handleDeleteModal}
           isOpen={isRemoveOpen}
-          entity={`/users/${selectedUser}`}
+          entity={`/student/${selectedStudent}`}
           onDelete={deleteApiData}
-          onFetch={fetchApiData("/users")}
+          onFetch={fetchApiData("/student")}
         />
       )}
       {/* Remove user modal
@@ -116,13 +119,16 @@ export default function Students() {
       <EditUserModal
         isOpen={isEditOpen}
         onClose={handleEditModal}
-        user={selectedUser}
+        user={selectedStudent}
       />
       {/* Edit user Modal */}
-
-      {!isLoading && (
+      {loading ? (
+        <div className="ml-[44rem] mt-36">
+          <Spinner />
+        </div>
+      ) : (
         <Table
-          data={users ?? []}
+          data={data?.student ?? []}
           columns={columns}
           title="Students"
           placeholder="Find by first name, last name, or email"

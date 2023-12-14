@@ -17,8 +17,6 @@ export default function StudentDashboard() {
   ];
 
   useEffect(() => {
-    dispatch(fetchApiData("/projects/documents"));
-    dispatch(fetchApiData("/projects"));
   }, []);
 
   return (
