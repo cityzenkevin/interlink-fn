@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "../pages/Homepage";
 
 
 import Login from "../pages/Login";
@@ -7,13 +6,14 @@ import Error from "../pages/Error";
 import DashboardRoutes from "./DashboardRoutes";
 import Register from "../pages/Register";
 import { EditPassword } from "../pages/ResetPassword";
+import LandingPage from "../pages/landing-page/landing-page";
 
 function MainRoutes() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* <Suspense fallback={<Skeleton />}> */}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/password/reset" element={<EditPassword />} />

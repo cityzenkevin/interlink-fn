@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppSelector, useAppDispatch } from "../../redux/hook";
-import { HiPlus } from "react-icons/hi2";
 
 import Table from "../../components/Table";
 
-import Button from "../../components/Button";
 import { userFields } from "../../constants/formFields";
 import RemoveModal from "../../components/RemoveModal";
 import { fields } from "../../types";

@@ -40,7 +40,7 @@ const SideNavLink: React.FC<SideNavLinkProps> = ({
         end={end}
         className={(navData) => {
           if (navData.isActive) {
-            return "py-2 text-center bg-primary flex flex-row font-bold text-white border-r-4 border-r-primary";
+            return "py-2 text-center bg-primary flex flex-row text-white border-r-4 border-r-primary";
           }
           return `flex flex-row py-2 text-white ${
             navData.isActive ? "navActive" : ""

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import NotFoundImg from "../assets/NotFoundImg.png";
-import NavBar from "../layouts/NavBar";
+import NavBar from "../sections/landing-page/nav-bar";
 
 function Error() {
   const navigate = useNavigate();
@@ -13,7 +13,9 @@ function Error() {
 
   return (
     <>
-      <NavBar />
+    <div className="bg-primary h-20">
+      < NavBar/>
+      </div>
       <div className="errorImg flex items-center justify-center h-screen w-screen text-center">
         <div>
           <img
