@@ -24,7 +24,7 @@ export default function Internships() {
 
   let [isRemoveOpen, setIsRemoveOpen] = useState(false);
   let [isEditOpen, setIsEditOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<any>(fieldState);
+  const [selectedInternship, setSelectedUser] = useState<any>(fieldState);
 
   const { users, success, isLoading, error } = useAppSelector(
     (state) => state.users
@@ -100,12 +100,12 @@ export default function Internships() {
   return (
     <div className="mt-28">
       {/* Remove user modal */}
-      {selectedUser && (
+      {selectedInternship && (
         <RemoveModal
           title="Delete user"
           onClose={handleDeleteModal}
           isOpen={isRemoveOpen}
-          entity={`/users/${selectedUser}`}
+          entity={`/users/${selectedInternship}`}
           onDelete={deleteApiData}
           onFetch={fetchApiData("/users")}
         />
@@ -116,7 +116,7 @@ export default function Internships() {
       <EditUserModal
         isOpen={isEditOpen}
         onClose={handleEditModal}
-        user={selectedUser}
+        user={selectedInternship}
       />
       {/* Edit user Modal */}
 

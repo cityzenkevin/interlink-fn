@@ -15,9 +15,6 @@
   "in any": "in any",
   "ed-tech organization": "ed-tech organization",
   "Get Started": "Get Started",
-  "Sign in to your Organization": "Sign in to your Organization",
-  "Enter your organization’s E-kibina URL": "Enter your organization’s E-kibina URL",
-  "your-organization.pulse.com": "your-organization.pulse.com",
   "Continue": "Continue",
   "Don’t know your organization URL?": "Don’t know your organization URL?",
   "Looking to register an organization instead?": "Looking to register an organization instead?",
@@ -121,8 +118,6 @@
   "DeleteCohort": "Delete a Cohort",
   "reallyRemoveCohort": "do you really want to remove this Cohort?",
   "Cancel": "Cancel",
-  "Cohort": "Cohort",
-  "CohortList": "Cohorts list",
   "Action": "Action",
   "Edit": "Edit",
   "Save": "Save",
@@ -239,5 +234,5 @@
   "Reply": "Reply",
   "error_page_paragraph": "The page you are looking for might have been removed, had its name changed or is temporarily unavailable.",
   "Invalid credentials": "Invalid credentials",
-  "Ibihano": "Fine & Penalties"
+  "email_notification_text": "Receive email notification according to your preferences"
 }

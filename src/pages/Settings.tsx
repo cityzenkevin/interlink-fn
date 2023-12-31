@@ -47,11 +47,11 @@ function Settings() {
                 className="ml-auto text-gray-600 text-xs md:text-base dark:text-dark-text-fill"
                 to="#link"
               >
-                <h4>
+                <button className="border bg-primary text-white px-4 py-2 rounded-md hover:text-primary hover:bg-white hover:border-primary duration-100 ease-in-out transition-all">
                   <Link to={`/dashboard/profile/${user.id}`}>
                     {t("Change")}
                   </Link>
-                </h4>
+                </button >
               </Link>
             </li>
 
@@ -83,7 +83,7 @@ function Settings() {
                 </h1>
                 <p className="text-sm text-gray-600 dark:text-dark-text-fill">
                   {t(
-                    "Receive monthly reports, weekly summaries, and more by email"
+                    "email_notification_text"
                   )}
                 </p>
               </div>
@@ -91,14 +91,16 @@ function Settings() {
                 checked={emailEnabled}
                 data-testid="emailChange"
                 onChange={setEmailEnabled}
-                className={`ml-auto border ${emailEnabled ? "border-gray-300 bg-primary" : ""
-                  } relative inline-flex h-6 w-12 items-center rounded-full`}
+                className={`ml-auto border ${
+                  emailEnabled ? "border-gray-300 bg-primary" : ""
+                } relative inline-flex h-6 w-12 items-center rounded-full`}
               >
                 <span
-                  className={`${emailEnabled
+                  className={`${
+                    emailEnabled
                       ? "bg-white translate-x-6"
                       : "bg-gray-300 translate-x-1"
-                    } inline-block h-4 w-4 transform rounded-full`}
+                  } inline-block h-4 w-4 transform rounded-full`}
                 />
               </Switch>
             </li>

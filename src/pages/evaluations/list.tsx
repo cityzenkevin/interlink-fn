@@ -21,7 +21,7 @@ userFields.forEach((field) => {
   fieldState[field.id as keyof typeof fieldState] = "";
 });
 
-export default function Users() {
+export default function Evaluations() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -134,7 +134,7 @@ export default function Users() {
       />
       {/* Edit user Modal */}
 
-      {/* <div className="ml-60 mb-2 flex ">
+      <div className="ml-60 mb-2 flex ">
         <Button
           variant="primary"
           size="md"
@@ -142,9 +142,9 @@ export default function Users() {
           style=" p-2 flex rounded-sm text-primary border border-primary shadow-sm hover:bg-primary hover:text-white "
         >
           <HiPlus className="mt-[2px] w-6 h-5" />
-          Add New User
+          Make New Evaluation
         </Button>
-      </div> */}
+      </div>
       {isLoading ? (
         <div className="ml-[44rem] mt-36">
           <Spinner />
@@ -153,7 +153,7 @@ export default function Users() {
         <Table
           data={users ?? []}
           columns={columns}
-          title="Users"
+          title="Evaluation"
           placeholder="Find by first name, last name, or email"
         />
       )}

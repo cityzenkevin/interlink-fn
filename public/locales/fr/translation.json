@@ -317,5 +317,6 @@
   "Forgot your password?": "Mot de passe oublié?",
   "Don't have an account?": "Vous n'avez pas de compte?",
   "Sign up": "S'inscrire",
-  "Users": "Utilisateurs"
+  "Users": "Utilisateurs",
+   "email_notification_text": "Vous recevrez des notifications par e-mail pour les commentaires, les mises à jour de notes et les rappels de session."
 }

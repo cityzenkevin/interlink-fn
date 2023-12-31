@@ -4,18 +4,17 @@ import { NavLink } from "react-router-dom";
 import { ChartPieIcon } from "@heroicons/react/24/solid";
 import { CogIcon } from "@heroicons/react/24/outline";
 import {
-  FaBuilding,
-  FaFile,
   FaFileSignature,
   FaSignOutAlt,
-  FaUsers,
+  FaUserAlt,
 } from "react-icons/fa";
 
 import Tooltip from "../components/ToolTip";
 import { UserContext } from "../hooks/useAuth";
 import CheckRole from "../utils/checkRoles";
 import SideNavLink from "../components/SideNavLink";
-import { AiOutlineUserSwitch } from "react-icons/ai";
+import { AiOutlineUserAdd, AiOutlineUserSwitch } from "react-icons/ai";
+import { HiDocument, HiUsers } from "react-icons/hi2";
 
 function Sidebar({ style, toggle }: { style: string; toggle: () => void }) {
   const { logout } = useContext(UserContext);
@@ -31,26 +30,28 @@ function Sidebar({ style, toggle }: { style: string; toggle: () => void }) {
         {/* Admin */}
 
         <CheckRole roles={["ADMIN"]}>
-          <SideNavLink onClick={toggle} name="Users" to="/dashboard/users">
-            <FaUsers className="w-5 mt-1 mr-2  text-dark-text-fill" />
-          </SideNavLink>
-          <SideNavLink
-            onClick={toggle}
-            name="Organizations"
-            to="/dashboard/organization"
-          >
-            <FaBuilding className="w-5 mt-1 mr-2  text-dark-text-fill" />
-          </SideNavLink>
-        </CheckRole>
+         
 
-        {/* ORGANIZATIONS */}
-        <CheckRole roles={["ORGANIZATION"]}>
           <SideNavLink
             onClick={toggle}
             name="Evaluations"
             to="/dashboard/evaluations"
           >
-            <FaUsers className="w-5 mt-1 mr-2  text-dark-text-fill" />
+            <HiDocument className="w-5 mt-1 mr-2  text-dark-text-fill" />
+          </SideNavLink>
+          <SideNavLink
+            onClick={toggle}
+            name="Students"
+            to="/dashboard/students"
+          >
+            <HiUsers className="w-5 mt-1 mr-2  text-dark-text-fill" />
+          </SideNavLink>
+          <SideNavLink
+            onClick={toggle}
+            name="Supervisors"
+            to="/dashboard/supervisors"
+          >
+            <FaUserAlt className="w-5 mt-1 mr-2  text-dark-text-fill" />
           </SideNavLink>
         </CheckRole>
 
@@ -61,7 +62,7 @@ function Sidebar({ style, toggle }: { style: string; toggle: () => void }) {
 
         {/* ORGANIZAITONS & STUDENTS */}
 
-        <CheckRole roles={["ORGANIZATION", "STUDENT"]}>
+        <CheckRole roles={["ADMIN", "STUDENT"]}>
           <SideNavLink
             onClick={toggle}
             name="Internships"
@@ -71,16 +72,6 @@ function Sidebar({ style, toggle }: { style: string; toggle: () => void }) {
           </SideNavLink>
         </CheckRole>
 
-        {/* ORGANIZATIONS & ADMIN */}
-        <CheckRole roles={["ORGANIZATION", "ADMIN"]}>
-          <SideNavLink
-            onClick={toggle}
-            name="Students"
-            to="/dashboard/students"
-          >
-            <AiOutlineUserSwitch className="w-5 mt-1 mr-2  text-dark-text-fill" />
-          </SideNavLink>
-        </CheckRole>
         {/* Shared Links */}
         <SideNavLink onClick={toggle} name="Settings" to="/dashboard/settings">
           <CogIcon className="w-5 mr-2 text-dark-text-fill" />

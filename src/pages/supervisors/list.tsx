@@ -7,8 +7,6 @@ import Table from "../../components/Table";
 import { userFields } from "../../constants/formFields";
 import RemoveModal from "../../components/RemoveModal";
 import { fields } from "../../types";
-import usersApi from "../../services/users.api";
-import AddUserModal from "../../sections/users/AddUser";
 import EditUserModal from "../../sections/users/EditUser";
 import { deleteApiData, fetchApiData } from "../../redux/features";
 import { AiFillDelete } from "react-icons/ai";
@@ -19,22 +17,15 @@ userFields.forEach((field) => {
   fieldState[field.id as keyof typeof fieldState] = "";
 });
 
-export default function Organizations() {
+export default function Supervisors() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  let [isRegisterOpen, setRegisterIsOpen] = useState(false);
   let [isRemoveOpen, setIsRemoveOpen] = useState(false);
   let [isEditOpen, setIsEditOpen] = useState(false);
-  const [selectedOrg, setSelectedOrganization] = useState<any>(fieldState);
-
-  const { users, success, isLoading, error } = useAppSelector(
-    (state) => state.users
-  );
-
-  const handleModal = () => {
-    setRegisterIsOpen(!isRegisterOpen);
-  };
+  const [selectedStudent, setSelectedStudent] = useState<any>(fieldState);
+  const data = useAppSelector((state) => state.api);
+  const { loading } = data;
 
   const handleDeleteModal = () => {
     setIsRemoveOpen(!isRemoveOpen);
@@ -45,29 +36,33 @@ export default function Organizations() {
   };
 
   useEffect(() => {
-    dispatch(usersApi.getUsers());
-  }, [success, error]);
-
+    dispatch(fetchApiData("/student"));
+  }, [dispatch]);
+  console.log(data);
   const columns = [
     {
+      Header: "#",
+      accessor: "id",
+    },
+    {
       Header: `${t("First Name")}`,
-      accessor: "firstname",
+      accessor: "user.firstName",
     },
     {
       Header: `${t("Last Name")}`,
-      accessor: "lastname",
+      accessor: "user.lastName",
     },
     {
       Header: "Email",
       accessor: "email",
     },
     {
-      Header: "Role",
-      accessor: "role",
+      Header: "School",
+      accessor: "school",
     },
     {
-      Header: "Gender",
-      accessor: "gender",
+      Header: "Department",
+      accessor: "department",
     },
     {
       Header: "Phone Number",
@@ -81,7 +76,7 @@ export default function Organizations() {
           {/* <div
             className="flex"
             onClick={() => {
-              setSelectedOrganization(row.original);
+              setSelectedStudent(row.original);
               setIsEditOpen(true);
             }}
           >
@@ -93,7 +88,7 @@ export default function Organizations() {
              transition duration-300 ease-in-out
             "
             onClick={() => {
-              setSelectedOrganization(row.original?.id);
+              setSelectedStudent(row.original?.id);
               handleDeleteModal();
             }}
           >
@@ -107,51 +102,35 @@ export default function Organizations() {
 
   return (
     <div className="mt-28">
-      {/* Add New org Modal */}
-      <AddUserModal isOpen={isRegisterOpen} onClose={handleModal} />
-      {/* Add New org Modal */}
-
       {/* Remove user modal */}
-      {selectedOrg && (
+      {selectedStudent && (
         <RemoveModal
-          title="Delete organization"
+          title="Delete student"
           onClose={handleDeleteModal}
           isOpen={isRemoveOpen}
-          entity={`/organization/${selectedOrg}`}
+          entity={`/student/${selectedStudent}`}
           onDelete={deleteApiData}
-          onFetch={fetchApiData("/organizations")}
+          onFetch={fetchApiData("/student")}
         />
       )}
-      {/* Remove org modal
+      {/* Remove user modal
 
-      {/* Edit org Modal */}
+      {/* Edit user Modal */}
       <EditUserModal
         isOpen={isEditOpen}
         onClose={handleEditModal}
-        user={selectedOrg}
+        user={selectedStudent}
       />
-      {/* Edit org Modal */}
-
-      {/* <div className="ml-60 mb-2 flex ">
-        <Button
-          variant="primary"
-          size="md"
-          onClick={handleModal}
-          style=" p-2 flex rounded-sm text-primary border border-primary shadow-sm hover:bg-primary hover:text-white "
-        >
-          <HiPlus className="mt-[2px] w-6 h-5" />
-          Add New Organization
-        </Button>
-      </div> */}
-      {isLoading ? (
+      {/* Edit user Modal */}
+      {loading ? (
         <div className="ml-[44rem] mt-36">
           <Spinner />
         </div>
       ) : (
         <Table
-          data={users ?? []}
+          data={data?.student ?? []}
           columns={columns}
-          title="Organization"
+          title="Supervisors"
           placeholder="Find by first name, last name, or email"
         />
       )}

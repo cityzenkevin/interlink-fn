@@ -14,10 +14,27 @@ export default function Dashboard() {
 
   const data = [
     {
-      title: "Users",
+      title: "Students",
       subtitle: `${users.length ?? 0}`,
-      description: "Number of Users",
+      description: "Number of students",
     },
+    {
+      title: "Internships",
+      subtitle: `${users.length ?? 0}`,
+      description: "Number of internships",
+    },
+    {
+      title: "Evaluations",
+      subtitle: `${users.length ?? 0}`,
+      description: "Number of evaluations",
+    },
+    {
+      title: "Supervisors",
+      subtitle: `${users.length ?? 0}`,
+      description: "Number of supervisors",
+    },
+    
+    
   ];
   const { user } = useContext(UserContext);
 
