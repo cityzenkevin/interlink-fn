@@ -21,7 +21,7 @@ function Sidebar({ style, toggle }: { style: string; toggle: () => void }) {
 
   return (
     <div
-      className={`${style} flex-col fixed h-[100%] w-1/5 md:w-[13%] pt-[3vh] lg:pt-[11vh] bg-dark-bg dark:bg-dark-bg border-r`}
+      className={`${style} flex-col fixed h-[100%] w-1/5 md:w-[13%] pt-[3vh] lg:pt-[11vh] bg-dark-bg  border-r`}
     >
       <div className="list-none mt-12">
         <SideNavLink onClick={toggle} name="Dashboard" to="/dashboard/">

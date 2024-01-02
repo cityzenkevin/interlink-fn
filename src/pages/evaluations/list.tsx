@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppSelector, useAppDispatch } from "../../redux/hook";
-import { HiPlus, HiOutlinePencil } from "react-icons/hi2";
+import { HiPlus } from "react-icons/hi2";
 
 import Table from "../../components/Table";
 

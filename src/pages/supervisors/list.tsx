@@ -11,6 +11,8 @@ import EditUserModal from "../../sections/users/EditUser";
 import { deleteApiData, fetchApiData } from "../../redux/features";
 import { AiFillDelete } from "react-icons/ai";
 import Spinner from "../../components/Spinner";
+import { HiOutlinePencil, HiPlus } from "react-icons/hi2";
+import AddSupervisorModal from "./add-supervisor";
 
 const fieldState: fields = {};
 userFields.forEach((field) => {
@@ -23,7 +25,9 @@ export default function Supervisors() {
 
   let [isRemoveOpen, setIsRemoveOpen] = useState(false);
   let [isEditOpen, setIsEditOpen] = useState(false);
-  const [selectedStudent, setSelectedStudent] = useState<any>(fieldState);
+  const [addModal, setAddModal] = useState(false);
+  const [selectedSupervisor, setSelectedSupervisor] = useState<any>(fieldState);
+
   const data = useAppSelector((state) => state.api);
   const { loading } = data;
 
@@ -31,14 +35,18 @@ export default function Supervisors() {
     setIsRemoveOpen(!isRemoveOpen);
   };
 
+  const handleAddModal = () => {
+    setAddModal(!addModal);
+  };
+
   const handleEditModal = () => {
     setIsEditOpen(!isEditOpen);
   };
 
   useEffect(() => {
-    dispatch(fetchApiData("/student"));
+    dispatch(fetchApiData("/users/supervisors"));
   }, [dispatch]);
-  console.log(data);
+
   const columns = [
     {
       Header: "#",
@@ -46,49 +54,45 @@ export default function Supervisors() {
     },
     {
       Header: `${t("First Name")}`,
-      accessor: "user.firstName",
+      accessor: "firstName",
     },
     {
       Header: `${t("Last Name")}`,
-      accessor: "user.lastName",
+      accessor: "lastName",
     },
     {
       Header: "Email",
       accessor: "email",
     },
     {
-      Header: "School",
-      accessor: "school",
-    },
-    {
-      Header: "Department",
-      accessor: "department",
-    },
-    {
       Header: "Phone Number",
       accessor: "telephone",
+    },
+    {
+      Header: "Evaluations",
+      accessor: "",
     },
     {
       Header: "Action",
       accessor: "",
       Cell: ({ row }: any) => (
         <div className="flex justify-evenly">
-          {/* <div
-            className="flex"
+          <div
+            className="flex text-white cursor-pointer  px-2 py-1 bg-primary hover:text-primary hover:bg-white hover:border-primary border border-primary rounded-md duration-100 transition-all ease-in"
             onClick={() => {
-              setSelectedStudent(row.original);
+              setSelectedSupervisor(row.original);
               setIsEditOpen(true);
             }}
           >
-            <HiOutlinePencil className="w-5  text-primary cursor-pointer" />
-            <span className="ml-2  cursor-pointer"> {t("Edit")} </span>
-          </div> */}
+            <HiOutlinePencil className="w-5 mt-1 " />
+            <span className="ml-2 "> {t("Edit")} </span>
+          </div>
           <button
             className="flex ml-6 bg-red-600 text-white px-3 py-1 hover:text-red-500 hover:bg-white hover:border-red-500 border-2 border-red-600 rounded-md
              transition duration-300 ease-in-out
             "
             onClick={() => {
-              setSelectedStudent(row.original?.id);
+              setSelectedSupervisor(row.original?.id);
               handleDeleteModal();
             }}
           >
@@ -102,25 +106,35 @@ export default function Supervisors() {
 
   return (
     <div className="mt-28">
-      {/* Remove user modal */}
-      {selectedStudent && (
+      <AddSupervisorModal onClose={handleAddModal} isOpen={addModal} />
+      {/* Remove supervisor modal */}
+      {selectedSupervisor && (
         <RemoveModal
-          title="Delete student"
+          title="Delete supervisor"
           onClose={handleDeleteModal}
           isOpen={isRemoveOpen}
-          entity={`/student/${selectedStudent}`}
+          entity={`/users/${selectedSupervisor}`}
           onDelete={deleteApiData}
-          onFetch={fetchApiData("/student")}
+          onFetch={fetchApiData("/users/supervisors")}
         />
       )}
-      {/* Remove user modal
+      {/* Remove supervisor modal
 
-      {/* Edit user Modal */}
+      {/* Edit supervisor Modal */}
       <EditUserModal
         isOpen={isEditOpen}
         onClose={handleEditModal}
-        user={selectedStudent}
+        user={selectedSupervisor}
       />
+
+      <div className="md:ml-52 mb-2">
+        <button className="px-4 py-2 flex border bg-primary text-white hover:bg-white hover:border-primary hover:text-primary duration-100 transition-all ease-in"
+         onClick={handleAddModal}
+        >
+          <HiPlus className="w-5 mt-1 cursor-pointer" />
+          Add New Supervisor
+        </button>
+      </div>
       {/* Edit user Modal */}
       {loading ? (
         <div className="ml-[44rem] mt-36">
@@ -128,7 +142,7 @@ export default function Supervisors() {
         </div>
       ) : (
         <Table
-          data={data?.student ?? []}
+          data={data?.supervisors ?? []}
           columns={columns}
           title="Supervisors"
           placeholder="Find by first name, last name, or email"

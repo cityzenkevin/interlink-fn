@@ -5,9 +5,9 @@ export default function NavBar() {
     <header className="absolute top-0 left-0 w-full z-50 px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64">
       <div className="flex flex-wrap items-center justify-between py-6">
         <div className="w-1/2 md:w-auto">
-          <a href="index.html" className="text-white font-bold text-2xl">
+          <Link to="/" className="text-white font-bold text-2xl">
             InternLink
-          </a>
+          </Link>
         </div>
 
         <label className="pointer-cursor md:hidden block">

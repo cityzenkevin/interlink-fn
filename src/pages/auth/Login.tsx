@@ -1,15 +1,15 @@
 import { useEffect, useContext, useState } from "react";
-import { useAppSelector, useAppDispatch } from "../redux/hook";
+import { useAppSelector, useAppDispatch } from "../../redux/hook";
 
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { loginFields } from "../constants/formFields";
-import Input from "../components/Input";
-import { loginUser } from "../services/auth.api";
-import { UserContext } from "../hooks/useAuth";
+import { loginFields } from "../../constants/formFields";
+import Input from "../../components/Input";
+import { loginUser } from "../../services/auth.api";
+import { UserContext } from "../../hooks/useAuth";
 
-import logo from "../assets/logo.png";
-import { Login as LoginI } from "../types";
+import logo from "../../assets/logo.png";
+import { Login as LoginI } from "../../types";
 
 type fields = {
   [key: string]: string | number;

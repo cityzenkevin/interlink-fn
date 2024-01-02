@@ -2,9 +2,22 @@ import NavBar from "../../sections/landing-page/nav-bar";
 import coverImg from "../../assets/cover-bg.jpg";
 import Footer from "../../sections/landing-page/footer";
 import InternshipCard from "../../sections/landing-page/internship-card";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hook";
+import { fetchApiData } from "../../redux/features";
+import { Internship } from "../../types";
+import { Link } from "react-router-dom";
 // import CompanyCard from "../../sections/landing-page/company-card";
 
 export default function LandingPage() {
+  const dispatch = useAppDispatch();
+  const data = useAppSelector((state) => state.api);
+  const { loading } = useAppSelector((state) => state.api);
+
+  useEffect(() => {
+    dispatch(fetchApiData("/internships"));
+  }, [dispatch]);
+
   return (
     <div className="antialiased bg-white font-sans text-gray-900">
       <main className="w-full">
@@ -29,10 +42,10 @@ export default function LandingPage() {
             <div className="lg:w-3/4 xl:w-2/4 relative z-10 h-100 lg:mt-16">
               <div>
                 <h1 className="text-white text-4xl md:text-5xl xl:text-6xl font-bold leading-tight">
-                Embark on a transformative journey toward a brighter future
+                  Embark on a transformative journey toward a brighter future
                 </h1>
                 <p className="text-blue-100 text-xl md:text-2xl leading-snug mt-4">
-                Embark on a transformative journey toward a brighter future
+                  Embark on a transformative journey toward a brighter future
                 </p>
                 <a
                   href="#"
@@ -47,21 +60,22 @@ export default function LandingPage() {
         {/* end hero*/}
 
         {/* start about*/}
-        <section id="about" className="relative px-4 py-16 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 lg:py-32">
+        <section
+          id="about"
+          className="relative px-4 py-16 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 lg:py-32"
+        >
           <div className="flex flex-col lg:flex-row lg:-mx-8">
             <div className="w-full lg:w-1/2 lg:px-8">
               <h2 className="text-3xl leading-tight font-bold mt-4">
                 Welcome to Intern Link
               </h2>
-              <p className="text-lg mt-4 font-semibold">
-               Hub for internships 
-              </p>
+              <p className="text-lg mt-4 font-semibold">Hub for internships</p>
               <p className="mt-2 leading-relaxed">
-              Discover boundless opportunities with our dedicated platform designed 
-              to seamlessly connect students with enriching internships.
-               Navigate your professional journey with confidence as
-               we prioritize trust, comfort, and meaningful experiences. 
-               Your path to success starts here
+                Discover boundless opportunities with our dedicated platform
+                designed to seamlessly connect students with enriching
+                internships. Navigate your professional journey with confidence
+                as we prioritize trust, comfort, and meaningful experiences.
+                Your path to success starts here
               </p>
             </div>
 
@@ -75,10 +89,12 @@ export default function LandingPage() {
                     Everything You Need Under One Roof
                   </h4>
                   <p className="mt-2 leading-relaxed">
-                  Access a comprehensive array of services within our cutting-edge platform – 
-                  from internship discovery and evaluations to skill-building opportunities and 
-                  career guidance. We provide a one-stop solution for students seeking a seamless
-                   experience, guiding them through every step of their internship journey.
+                    Access a comprehensive array of services within our
+                    cutting-edge platform – from internship discovery and
+                    evaluations to skill-building opportunities and career
+                    guidance. We provide a one-stop solution for students
+                    seeking a seamless experience, guiding them through every
+                    step of their internship journey.
                   </p>
                 </div>
               </div>
@@ -92,11 +108,12 @@ export default function LandingPage() {
                     Our Student-Focused Approach
                   </h4>
                   <p className="mt-2 leading-relaxed">
-                  Your customized internship plan will align seamlessly with your aspirations,
-                   preferences, and objectives. Whether you're new to the internship scene or 
-                   looking to enhance your skills, our user-friendly platform, supportive team,
-                    and constructive opportunities will ensure you feel at ease throughout your
-                     professional journey
+                    Your customized internship plan will align seamlessly with
+                    your aspirations, preferences, and objectives. Whether
+                    you're new to the internship scene or looking to enhance
+                    your skills, our user-friendly platform, supportive team,
+                    and constructive opportunities will ensure you feel at ease
+                    throughout your professional journey
                   </p>
                 </div>
               </div>
@@ -128,24 +145,32 @@ export default function LandingPage() {
         {/* end about*/}
 
         {/* start blog*/}
-        <section id="internships" className="relative bg-white px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 pb-8">
+        <section
+          id="internships"
+          className="relative bg-white px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 pb-8"
+        >
           <div className="">
             <h2 className="text-3xl leading-tight font-bold">Internships</h2>
             <p className="text-gray-600 mt-2 md:max-w-lg">Latest internships</p>
 
-            <a
-              href="#"
-              title=""
+            <Link
+              to={"/internships"}
               className="inline-block text-primary font-semibold mt-6 mt:md-0"
             >
               View All Internships
-            </a>
+            </Link>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
-            {[1, 2, 3].map(() => (
-              <InternshipCard />
-            ))}
+            {data?.internships?.map((internship:Internship, idx:number) => {
+                internship;
+              return (
+                <InternshipCard
+                  key={idx}
+                  {...internship}
+                />
+              );
+            })}
           </div>
         </section>
         {/* end blog*/}

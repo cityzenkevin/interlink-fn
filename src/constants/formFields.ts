@@ -21,12 +21,28 @@ export const loginFields = [
   },
 ];
 
-export const resetPasswordField = {
-  name: "email",
-  type: "email",
-  placeholder: "Email Address",
-  isRequired: true,
-};
+export const resetPasswordField = [
+  {
+    labelText: "New Password",
+    labelFor: "password",
+    id: "password",
+    name: "password",
+    type: "password",
+    autoComplete: "current-password",
+    isRequired: true,
+    placeholder: "Enter new password",
+  },
+  {
+    labelText: "Confirm Password",
+    labelFor: "confirm-password",
+    id: "confirmPassword",
+    name: "confirm-password",
+    type: "password",
+    autoComplete: "confirm-password",
+    isRequired: true,
+    placeholder: "Confirm password",
+  },
+];
 
 export const passwordFields = [
   {

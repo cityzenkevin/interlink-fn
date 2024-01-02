@@ -23,8 +23,8 @@ function UserProvider({ children, ...props }: Props) {
     localStorage.setItem(
       "auth",
       JSON.stringify({
-        firstname: data.user?.firstname,
-        lastname: data.user?.lastname,
+        firstname: data.user?.firstName,
+        lastname: data.user?.lastName,
         auth: true,
         email: data.user?.email,
         role: data.user?.role,
@@ -34,8 +34,8 @@ function UserProvider({ children, ...props }: Props) {
     );
     setUser(() => ({
       id: data.user.id,
-      firstname: data.user?.firstname,
-      lastname: data.user?.lastname,
+      firstname: data.user?.firstName,
+      lastname: data.user?.lastName,
       auth: true,
       email: data.user?.email,
       role: data.user?.role,

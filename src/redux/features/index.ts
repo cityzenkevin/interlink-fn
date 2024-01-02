@@ -23,11 +23,23 @@ export const fetchApiData = createAsyncThunk(
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       });
+
       let entityName: string = url.split("/").pop() as string;
-      console.log(entityName);
+
       if (entityName.split("?").length > 1) {
         entityName = `${entityName.split("?")[0]}Query`;
       }
+
+      const isSingleItem = res.data && !Array.isArray(res.data);
+
+      if (isSingleItem) {
+        let e = url.split("/");
+        const entity = e[e.length - 2];
+
+        // If it's a single item, use a different entityName or identifier
+        entityName = `latest${entity}`;
+      }
+
       return { entityName, data: res.data };
     } catch (error) {
       return rejectWithValue(handleErrorResponse(error));
@@ -128,9 +140,11 @@ const apiSlice = createSlice({
       .addCase(createApiData.fulfilled, (state) => {
         state.loading = false;
       })
-      .addCase(createApiData.rejected, (state, action) => {
+      .addCase(createApiData.rejected, (state, action: any) => {
+        console.log(action);
         state.loading = false;
         state.error = action.error.message as string;
+        state.errorData = action.payload?.data?.data;
       })
       .addCase(updateApiData.pending, (state) => {
         state.loading = true;

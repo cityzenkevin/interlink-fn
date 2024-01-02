@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 
-import { registerFields } from "../constants/formFields";
+import { registerFields } from "../../constants/formFields";
 // import { login } from "../../redux/actions/auth.action";
-import Input from "../components/Input";
+import Input from "../../components/Input";
 // import Alert from "../components/Alert";
 
 type fields = {

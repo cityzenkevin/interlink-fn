@@ -31,3 +31,18 @@ type User = {
   lastname: string;
   email: string;
 };
+
+interface Internship {
+  id: number;
+  title: string;
+  description: string;
+  photoUrl: string;
+  documentUrl: string;
+  deadline: Date;
+  duration: number;
+  durationUnit: string;
+  applications: number;
+  department: string;
+  startDate: Date;
+  created: Date;
+}

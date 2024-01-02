@@ -9,12 +9,17 @@ export const localUrl = url;
 
 interface ErrorResponse {
   message: string;
+  data: any;
 }
 
 export const handleErrorResponse = (error: any): ErrorResponse => {
   if (error.response !== undefined) {
-    return { message: error.response.data.message };
+    return {
+      message: error.response.data.message,
+      data: error.response.data,
+    };
   }
-  return { message: error.message };
+  return { message: error.message, data: null };
 };
+
 export default api;

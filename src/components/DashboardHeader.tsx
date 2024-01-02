@@ -6,6 +6,7 @@ import Logo from "../assets/logoText.jpg";
 import Avatar from "../assets/avatar.png";
 import Sidebar from "../layouts/Sidebar";
 import ProfileDropdown from "./ProfileDropdown";
+import { AiOutlineUser } from "react-icons/ai";
 
 function DashHeader() {
   const [showProfileDropdown, setShowprofileDropdown] = useState(false);
@@ -53,15 +54,18 @@ function DashHeader() {
             </Link>
           </div>
            
-          <div onClick={handleShowProfileDropdown} className="ml-auto mr-2 flex ">
+          <div onClick={handleShowProfileDropdown} className="ml-auto mr-2 flex justify-center items-center">
             <span className="mr-2 text-lg font-semibold cursor-pointer">
                {user.firstname}
             </span>
-            <img
+            <div className="rounded-full   mr-2"> 
+            <AiOutlineUser className=" mt-1"/>
+            </div>
+            {/* <img
               className="w-8 cursor-pointer mr-auto"
               src={Avatar}
               alt="avatar"
-            />
+            /> */}
           </div>
         </div>
         <ul

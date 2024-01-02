@@ -7,10 +7,12 @@ import usersApi from "../../services/users.api";
 import HrDashboard from "./HrDashboard";
 import StudentDashboard from "./StudentDashboard";
 import OrganizationDashboard from "./OrganizationDashboard";
+import { fetchApiData } from "../../redux/features";
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
   const { users } = useAppSelector((state) => state.users);
+const d = useAppSelector((state) => state.api);
 
   const data = [
     {
@@ -20,7 +22,7 @@ export default function Dashboard() {
     },
     {
       title: "Internships",
-      subtitle: `${users.length ?? 0}`,
+      subtitle: `${d?.internship?.length ?? 0}`,
       description: "Number of internships",
     },
     {
@@ -30,7 +32,7 @@ export default function Dashboard() {
     },
     {
       title: "Supervisors",
-      subtitle: `${users.length ?? 0}`,
+      subtitle: `${d?.supervisors?.length ?? 0}`,
       description: "Number of supervisors",
     },
     
@@ -41,6 +43,9 @@ export default function Dashboard() {
   useEffect(() => {
     if (user.role === "ADMIN") {
       dispatch(usersApi.getUsers());
+      dispatch(fetchApiData("/student/internship"));
+      dispatch(fetchApiData("/users"));
+      dispatch(fetchApiData("/users/supervisors"));
     }
   }, []);
   let DashboardComponent;

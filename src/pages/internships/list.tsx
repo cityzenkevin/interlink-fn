@@ -9,11 +9,13 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { userFields } from "../../constants/formFields";
 import RemoveModal from "../../components/RemoveModal";
 import { fields } from "../../types";
-import usersApi from "../../services/users.api";
 import EditUserModal from "../../sections/users/EditUser";
 import { deleteApiData, fetchApiData } from "../../redux/features";
+import { Link } from "react-router-dom";
+import Spinner from "../../components/Spinner";
 
 const fieldState: fields = {};
+
 userFields.forEach((field) => {
   fieldState[field.id as keyof typeof fieldState] = "";
 });
@@ -24,11 +26,10 @@ export default function Internships() {
 
   let [isRemoveOpen, setIsRemoveOpen] = useState(false);
   let [isEditOpen, setIsEditOpen] = useState(false);
-  const [selectedInternship, setSelectedUser] = useState<any>(fieldState);
+  const [selectedInternship, setSelectedInternship] = useState<any>(fieldState);
 
-  const { users, success, isLoading, error } = useAppSelector(
-    (state) => state.users
-  );
+  const data = useAppSelector((state) => state.api);
+  const { loading } = useAppSelector((state) => state.api);
 
   const handleDeleteModal = () => {
     setIsRemoveOpen(!isRemoveOpen);
@@ -39,33 +40,58 @@ export default function Internships() {
   };
 
   useEffect(() => {
-    dispatch(usersApi.getUsers());
-  }, [success, error]);
+    dispatch(fetchApiData("/student/internship"));
+  }, [dispatch]);
 
   const columns = [
     {
-      Header: `${t("First Name")}`,
-      accessor: "firstname",
+      Header: `${t("Title")}`,
+      accessor: "title",
+    },
+   
+    {
+      Header: "Duration",
+      accessor: "",
+      Cell: ({ row }: any) => (
+        <div className="flex flex-col">
+          <span className="text-sm">
+            {row.original.duration} {row.original.durationUnit}
+          </span>
+        </div>
+      ),
     },
     {
-      Header: `${t("Last Name")}`,
-      accessor: "lastname",
+      Header: "Application Deadline",
+      accessor: "",
+      Cell: ({ row }: any) => (
+        <div className="flex flex-col">
+          <span className="text-sm">
+            {new Date(row.original.deadline).toDateString()}
+          </span>
+        </div>
+      ),
     },
     {
-      Header: "Email",
-      accessor: "email",
+      Header: "Internship Photo",
+      accessor: "",
+      Cell: ({ row }: any) => (
+        <div className="flex flex-col text-blue-600">
+          <a href={row.original.photoUrl} target="_blank">
+            Photo
+          </a>
+        </div>
+      ),
     },
     {
-      Header: "Role",
-      accessor: "role",
-    },
-    {
-      Header: "Gender",
-      accessor: "gender",
-    },
-    {
-      Header: "Phone Number",
-      accessor: "telephone",
+      Header: "Internship Document",
+      accessor: "",
+      Cell: ({ row }: any) => (
+        <div className="flex flex-col text-blue-600">
+          <a href={row.original.documentUrl} target="_blank">
+            Document
+          </a>
+        </div>
+      ),
     },
     {
       Header: "Action",
@@ -73,24 +99,24 @@ export default function Internships() {
       Cell: ({ row }: any) => (
         <div className="flex justify-evenly">
           <div
-            className="flex"
+            className="flex text-white cursor-pointer  px-2 py-1 bg-primary hover:text-primary hover:bg-white hover:border-primary border border-primary rounded-md duration-100 transition-all ease-in"
             onClick={() => {
-              setSelectedUser(row.original);
+              setSelectedInternship(row.original);
               setIsEditOpen(true);
             }}
           >
-            <HiOutlinePencil className="w-5  text-primary cursor-pointer" />
-            <span className="ml-2  cursor-pointer"> {t("Edit")} </span>
+            <HiOutlinePencil className="w-5 mt-1 " />
+            <span className="ml-2 "> {t("Edit")} </span>
           </div>
           <div
-            className="flex ml-6"
+            className="flex ml-6 text-white cursor-pointer px-2 py-1 bg-red-500 hover:text-red-500 hover:bg-white hover:border-red-500 border border-red-500 rounded-md duration-100 transition-all ease-in"
             onClick={() => {
-              setSelectedUser(row.original?.id);
+              setSelectedInternship(row.original?.id);
               handleDeleteModal();
             }}
           >
-            <XMarkIcon className="w-5  text-red-500 cursor-pointer" />
-            <span className="ml-2 mb-2 cursor-pointer"> {t("Delete")} </span>
+            <XMarkIcon className="w-5  " />
+            <span className="ml-2  "> {t("Delete")} </span>
           </div>
         </div>
       ),
@@ -99,33 +125,44 @@ export default function Internships() {
 
   return (
     <div className="mt-28">
-      {/* Remove user modal */}
+      {/* Remove internship modal */}
       {selectedInternship && (
         <RemoveModal
-          title="Delete user"
+          title="Delete Internship"
           onClose={handleDeleteModal}
           isOpen={isRemoveOpen}
-          entity={`/users/${selectedInternship}`}
+          entity={`/users/internship/${selectedInternship}`}
           onDelete={deleteApiData}
-          onFetch={fetchApiData("/users")}
+          onFetch={fetchApiData("/student/internship")}
         />
       )}
-      {/* Remove user modal
+      {/* Remove internship modal
 
-      {/* Edit user Modal */}
+      {/* Edit internship Modal */}
       <EditUserModal
         isOpen={isEditOpen}
         onClose={handleEditModal}
         user={selectedInternship}
       />
-      {/* Edit user Modal */}
+      {/* Edit internship Modal */}
 
-      {!isLoading && (
+      <div className="md:ml-52 mb-2">
+        <Link to="/dashboard/internships/create">
+          <button className="px-4 py-2 border bg-primary text-white hover:bg-white hover:border-primary hover:text-primary duration-100 transition-all ease-in">
+            Add Internship
+          </button>
+        </Link>
+      </div>
+      {loading ? (
+        <div className="ml-[44rem] mt-36">
+          <Spinner />
+        </div>
+      ) : (
         <Table
-          data={users ?? []}
+          data={data?.internship ?? []}
           columns={columns}
           title="Internships"
-          placeholder="Find by first name, last name, or email"
+          placeholder="Find by title, last description, or deadline"
         />
       )}
     </div>

@@ -14,6 +14,7 @@ import Students from "../pages/students/list";
 import Internships from "../pages/internships/list";
 import Evaluations from "../pages/evaluations/list";
 import Supervisors from "../pages/supervisors/list";
+import CreateInternship from "../pages/internships/create-internship";
 
 function DashboardRoutes() {
   const [nav, setNav] = useState(false);
@@ -30,10 +31,11 @@ function DashboardRoutes() {
             <Route path="/users" element={<Users />} />
             <Route path="/students" element={<Students />} />
             <Route path="/internships" element={<Internships />} />
+            <Route path="/internships/create" element={<CreateInternship />} />
             <Route path="/profile/edit" element={<EditProfile />} />
             <Route path="/profile/:id" element={<Profile />} />
-            <Route path="/evaluations" element={<Evaluations/>} />
-            <Route path="/supervisors" element={<Supervisors/>} />
+            <Route path="/evaluations" element={<Evaluations />} />
+            <Route path="/supervisors" element={<Supervisors />} />
           </Routes>
         </Suspense>
       </div>
