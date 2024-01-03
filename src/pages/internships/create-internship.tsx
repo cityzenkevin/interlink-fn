@@ -241,6 +241,11 @@ export default function CreateInternship() {
                     description: value,
                   });
                 }}
+                initialValue="
+                <p>
+                    Write description here
+                </p>
+                "
               />
             </div>
             <div className="py-2">

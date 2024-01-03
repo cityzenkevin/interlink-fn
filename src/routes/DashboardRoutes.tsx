@@ -8,7 +8,7 @@ import Square from "../components/Skeletons/Square";
 import Dashboard from "../pages/dashboards";
 import Settings from "../pages/Settings";
 import Profile from "../pages/Profile";
-import EditProfile from "../pages/ProfileEdit";
+import EditProfile from "../sections/profile/profile-edit";
 import Users from "../pages/evaluations/list";
 import Students from "../pages/students/list";
 import Internships from "../pages/internships/list";

@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../redux/hook";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { loginFields } from "../../constants/formFields";
 import Input from "../../components/Input";
@@ -27,10 +27,12 @@ const Login = () => {
   const { login } = useContext(UserContext);
 
   const [loginState, setLoginState] = useState(fieldState);
-  const { error, user, isLoading } = useAppSelector((state) => state.login);
+  const { error, user, isLoading, lastPage } = useAppSelector(
+    (state) => state.login
+  );
 
   useEffect(() => {
-    if (user) {
+    if (user?.id) {
       login({ user: { ...user } });
       navigate("/dashboard/");
     }
@@ -55,19 +57,17 @@ const Login = () => {
             <img src={logo} alt="" className="w-24" />
           </div>
           <div>
-          <div className="flex my-2 items-center justify-between ">
-            <div>
-              Don't have an account?  
+            <div className="flex my-2 items-center justify-between ">
+              <div>Don't have an account?</div>
+              <div className="text-sm ml-2">
+                <a
+                  href="/signup"
+                  className="font-medium text-primary hover:primaryHover"
+                >
+                  {t("Sign Up")}
+                </a>
+              </div>
             </div>
-            <div className="text-sm ml-2">
-              <a
-                href="/signup"
-                className="font-medium text-primary hover:primaryHover"
-              >               
-                {t("Sign Up")}
-              </a>
-            </div>
-          </div>
           </div>
         </div>
         <div
@@ -103,12 +103,20 @@ const Login = () => {
           </div>
           <div className="flex items-center justify-between ">
             <div className="text-sm">
-              <a
-                href="/password/reset"
+              <Link
+                to="/password/reset"
                 className="font-medium text-primary hover:primaryHover"
               >
                 {t("Forgot your password?")}
-              </a>
+              </Link>
+            </div>
+            <div className="text-sm">
+              <Link
+                to="/"
+                className="font-medium text-primary hover:primaryHover"
+              >
+                {t("Go to Home")}
+              </Link>
             </div>
           </div>
           <button

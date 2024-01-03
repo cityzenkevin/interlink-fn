@@ -1,6 +1,19 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../hooks/useAuth";
+import { useAppDispatch } from "../../redux/hook";
+import { logout as logoutAction } from "../../redux/features/auth.feature";
 
 export default function NavBar() {
+  const user = JSON.parse(localStorage.getItem("auth") || "{}");
+  const dispatch = useAppDispatch();
+  const { logout } = useContext(UserContext);
+
+  const handleClick = () => {
+    dispatch(logoutAction());
+    logout();
+  };
+
   return (
     <header className="absolute top-0 left-0 w-full z-50 px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64">
       <div className="flex flex-wrap items-center justify-between py-6">
@@ -31,7 +44,7 @@ export default function NavBar() {
               <li>
                 <a
                   className="py-2 inline-block md:text-white md:hidden lg:block font-semibold"
-                  href="#about"
+                  href="/#about"
                 >
                   About Us
                 </a>
@@ -39,36 +52,56 @@ export default function NavBar() {
               <li className="md:ml-4">
                 <a
                   className="py-2 inline-block md:text-white md:px-2 font-semibold"
-                  href="#internships"
+                  href="/#internships"
                 >
                   Internships
                 </a>
               </li>
-           
+
               <li className="md:ml-4">
                 <a
                   className="py-2 inline-block md:text-white md:px-2 font-semibold"
-                  href="#contact"
+                  href="/#contact"
                 >
                   Contact Us
                 </a>
               </li>
               <li className="md:ml-6 mt-3 md:mt-0">
-                <Link
-                  className="inline-block font-semibold px-4 py-2 text-white bg-blue-600 md:bg-transparent md:text-white border border-white rounded"
-                  to="/login"
-                >
-                  Login
-                </Link>
+                {user?.id ? (
+                  <Link
+                    className="inline-block font-semibold px-4 py-2 text-white bg-primary md:bg-transparent border rounded"
+                    to="/dashboard"
+                  >
+                    Dashboard
+                  </Link>
+                ) : (
+                  <Link
+                    className="inline-block font-semibold px-4 py-2 text-white bg-primary md:bg-transparent border rounded"
+                    to="/login"
+                  >
+                    Login
+                  </Link>
+                )}
               </li>
-              <li className="md:ml-6 mt-3 md:mt-0">
-                <Link
-                  className="inline-block font-semibold px-4 py-2 text-white bg-primary md:bg-transparent border rounded"
-                  to="/register"
-                >
-                  Register
-                </Link>
-              </li>
+              {user?.id ? (
+                <li className="md:ml-6 mt-3 md:mt-0">
+                  <button
+                    className="inline-block font-semibold px-4 py-2 border border-red-700 text-red-700 bg-primary md:bg-transparent  rounded"
+                    onClick={handleClick}
+                  >
+                    Logout
+                  </button>
+                </li>
+              ) : (
+                <li className="md:ml-6 mt-3 md:mt-0">
+                  <Link
+                    className="inline-block font-semibold px-4 py-2 text-white bg-primary md:bg-transparent border rounded"
+                    to="/signup"
+                  >
+                    Sign Up
+                  </Link>
+                </li>
+              )}
             </ul>
           </nav>
         </div>

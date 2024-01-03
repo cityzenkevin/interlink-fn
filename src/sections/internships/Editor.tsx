@@ -6,20 +6,23 @@ const tinyMceKey = import.meta.env.VITE_TINY_MCE_API_KEY;
 interface Props {
   setValue: (value: string) => void;
   value: string;
+  initialValue?: string;
+  height?: number
 }
-export default function Edit({ setValue, value }: Props) {
+export default function Edit({ setValue, value, initialValue, height }: Props) {
   const editorRef = useRef<any>(null);
-
   return (
     <>
       <Editor
         apiKey={tinyMceKey}
         onInit={(evt, editor) => (editorRef.current = editor)}
-        initialValue="<p>This is the initial content of the editor.</p>"
+        initialValue={
+          initialValue ?? "<p>This is the initial content of the editor.</p>"
+        }
         onEditorChange={(newValue, editor) => setValue(newValue)}
         value={value}
         init={{
-          height: 300,
+          height: height ?? 300,
           menubar: false,
           plugins: [
             "advlist",

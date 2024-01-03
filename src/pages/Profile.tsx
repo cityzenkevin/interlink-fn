@@ -1,28 +1,24 @@
-import { useEffect } from "react";
-import { useParams } from "react-router";
+import { useContext } from "react";
 
 import ProfileCoverPage from "../components/ProfileCoverpage";
-import ProfileTabs from "./ProfileTabs";
-import { useAppDispatch, useAppSelector } from "../redux/hook";
-import { fetchApiData } from "../redux/features";
+import ProfileTabs from "../pages/profile/ProfileTabs";
+import { UserContext } from "../hooks/useAuth";
 
 export default function Profile() {
-  const dispatch = useAppDispatch();
-  const data = useAppSelector((state) => state.api);
-  const { id } = useParams();
-  useEffect(() => {
-    dispatch(fetchApiData(`/users/${id}`));
-  }, []);
+  const { user } = useContext(UserContext);
+  const data = user;
 
   return (
     <div className="bg-light-bg dark:bg-dark-frame-bg min-h-screen">
-      {id && data[id] && (
+      {data ? (
         <>
-          <ProfileCoverPage data={id && data[id]} currentPage="viewProfile" />
           <div className="mt-2 p-6">
-            {data && <ProfileTabs data={id && data[id]} />}
+            <ProfileTabs data={data} />
           </div>
         </>
+      ) : (
+        <></>
+        // <Square />
       )}
     </div>
   );

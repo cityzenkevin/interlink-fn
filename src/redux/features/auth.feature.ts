@@ -8,6 +8,7 @@ interface InitialState {
   error: string;
   isAuth: boolean;
   user: any;
+  lastPage?: string;
 }
 const initialState: InitialState = {
   isLoading: false,
@@ -23,6 +24,9 @@ export const authSlice = createSlice({
     logout: (state) => {
       localStorage.removeItem("auth_token");
       state.user = {};
+    },
+    setLastPage: (state, action: PayloadAction<string>) => {
+      state.lastPage = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -42,6 +46,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setLastPage } = authSlice.actions;
 
 export default { login: authSlice.reducer };

@@ -12,8 +12,6 @@ export default function SingleInternship() {
   const id = window.location.pathname.split("/")[2];
 
   const internship: Internship = data?.latestinternships;
-  const { title, description, deadline, department, created, photoUrl } =
-    internship;
 
   useEffect(() => {
     dispatch(fetchApiData("/internships"));
@@ -33,36 +31,35 @@ export default function SingleInternship() {
       >
         <div className="pt-8">
           <h2 className="text-3xl leading-tight font-bold">Internships</h2>
-          <p className="text-gray-600 mt-2 md:max-w-lg">Latest internships</p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-5 mt-3">
+        <div className="grid grid-cols-1 gap-5 mt-3">
           <div className="w-full">
-            <div className="bg-white rounded border border-gray-300">
-              <div className="w-full h-48 overflow-hidden bg-gray-300">
+            <div className="bg-white rounded  ">
+              <div className="w-full h-48 overflow-hidden ">
                 <img
-                  src={photoUrl}
+                  src={internship?.photoUrl}
                   alt=""
-                  className="w-full h-full object-cover object-center"
+                  className="w-1/3"
                 />
               </div>
               <div className="p-4">
                 <div className="flex items-center text-sm">
                   <span className="text-primary font-semibold">
-                    {department}
+                    {internship?.department}
                   </span>
                   <span className="ml-4 text-gray-600">
-                    {new Date(created)?.toDateString()}
+                    {new Date(internship?.created)?.toDateString()}
                   </span>
                 </div>
                 <Link to={`/internships/${id}`}>
                   <p className="text-lg font-semibold leading-tight mt-4">
-                    {title}
+                    {internship?.title}
                   </p>
                 </Link>
                 <div
                   className="list-disc"
-                  dangerouslySetInnerHTML={{ __html: description }}
+                  dangerouslySetInnerHTML={{ __html: internship?.description }}
                 />
                 <button className="px-4 py-2 border bg-primary text-white  mt-2 hover:bg-white hover:text-primary hover:border-primary duration-100 transition-all ease-in-out">
                   Apply
@@ -72,7 +69,7 @@ export default function SingleInternship() {
                     <p className="text-red-600">
                       Deadline:
                       <span className="text-gray-900 font-semibold ml-2">
-                        {new Date(deadline)?.toDateString()}
+                        {new Date(internship?.deadline)?.toDateString()}
                       </span>
                     </p>
                   </div>
