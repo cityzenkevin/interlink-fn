@@ -15,11 +15,11 @@ export default function NavBar() {
   };
 
   return (
-    <header className="absolute top-0 left-0 w-full z-50 px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64">
+    <header className="absolute bg-primary top-0 left-0 w-full z-50 px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64">
       <div className="flex flex-wrap items-center justify-between py-6">
         <div className="w-1/2 md:w-auto">
           <Link to="/" className="text-white font-bold text-2xl">
-            InternLink
+            Internship Offer Management System
           </Link>
         </div>
 
@@ -86,7 +86,7 @@ export default function NavBar() {
               {user?.id ? (
                 <li className="md:ml-6 mt-3 md:mt-0">
                   <button
-                    className="inline-block font-semibold px-4 py-2 border border-red-700 text-red-700 bg-primary md:bg-transparent  rounded"
+                    className="inline-block font-semibold px-4 py-2 border  border-red-700 text-white bg-red-700 hover:bg-red-500  rounded"
                     onClick={handleClick}
                   >
                     Logout

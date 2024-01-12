@@ -8,7 +8,7 @@ import { Internship } from "../../types";
 export default function LandingInternships() {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.api);
-  const { loading } = useAppSelector((state) => state.api);
+  // const { loading } = useAppSelector((state) => state.api);
 
   useEffect(() => {
     dispatch(fetchApiData("/internships"));

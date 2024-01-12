@@ -6,7 +6,6 @@ import {
   AiFillEdit,
   AiFillPlusCircle,
   AiFillPlusSquare,
-  AiOutlineLink,
 } from "react-icons/ai";
 import AddExperienceModal from "./add-certificate";
 import { fetchApiData } from "../../../redux/features";
@@ -83,7 +82,7 @@ export default function Experience() {
         </div>
         <div className="font-bold px-4 py-2 text-base mt-4">Resume</div>
         <div className="font-semibold flex justify-between items-center px-4 py-2 text-base mt-2 pb-6">
-          {!data?.resume[0]?.resumeUrl ? (
+          {!(data?.resume?.length > 0 && data?.resume[0]?.resumeUrl )? (
             <div className="text-center py-4 px-8 bg-red-600 rounded-full text-white font-semibold">
               No uploaded resume
             </div>

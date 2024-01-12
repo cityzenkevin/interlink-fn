@@ -27,7 +27,7 @@ const Login = () => {
   const { login } = useContext(UserContext);
 
   const [loginState, setLoginState] = useState(fieldState);
-  const { error, user, isLoading, lastPage } = useAppSelector(
+  const { error, user, isLoading } = useAppSelector(
     (state) => state.login
   );
 
@@ -60,12 +60,12 @@ const Login = () => {
             <div className="flex my-2 items-center justify-between ">
               <div>Don't have an account?</div>
               <div className="text-sm ml-2">
-                <a
-                  href="/signup"
+                <Link
+                  to="/signup"
                   className="font-medium text-primary hover:primaryHover"
                 >
                   {t("Sign Up")}
-                </a>
+                </Link>
               </div>
             </div>
           </div>

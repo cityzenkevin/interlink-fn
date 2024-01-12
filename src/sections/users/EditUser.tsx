@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import Modal from "../../components/Modal";
 import { userFields } from "../../constants/formFields";
 import Input from "../../components/Input";
-import usersApi from "../../services/users.api";
+import { updateApiData } from "../../redux/features";
 
 interface IEditProps extends IProps {
   user: fields;
@@ -18,17 +18,36 @@ userFields.forEach((field) => {
 });
 
 const EditUserModal = ({ isOpen, onClose, user }: IEditProps) => {
-  const [selectedUser, setSelectedUser] = useState<fields>(user);
+  const [selectedUser, setSelectedUser] = useState<fields>({
+    ...user,
+    firstname: user.firstName,
+    lastname: user.lastName,
+  });
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setSelectedUser(user);
+    setSelectedUser({
+      ...user,
+      firstname: user.firstName,
+      lastname: user.lastName,
+    });
   }, [user]);
 
   const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await dispatch(usersApi.updateUser(selectedUser)).unwrap();
+      await dispatch(
+        updateApiData({
+          body: {
+            firstName: selectedUser.firstname,
+            lastName: selectedUser.lastname,
+            email: selectedUser.email,
+            telephone: selectedUser.telephone,
+          },
+          url: `/users/${user.id}`,
+        })
+      ).unwrap();
       toast.success("User updated successfully");
       onClose();
       setSelectedUser(fieldState);
@@ -42,6 +61,7 @@ const EditUserModal = ({ isOpen, onClose, user }: IEditProps) => {
       }
     }
   };
+  console.log(selectedUser);
   return (
     <Modal
       isOpen={isOpen}

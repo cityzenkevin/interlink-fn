@@ -165,8 +165,17 @@ export const userFields = [
   },
 ];
 
-
 export const registerFields = [
+  {
+    labelText: "Username",
+    labelFor: "username",
+    id: "username",
+    name: "username",
+    type: "text",
+    autoComplete: "username",
+    isRequired: true,
+    placeholder: "Enter username",
+  },
   {
     labelText: "Email",
     labelFor: "email",
@@ -177,6 +186,27 @@ export const registerFields = [
     isRequired: true,
     placeholder: "Enter email",
   },
+
+  {
+    labelText: "First Name",
+    labelFor: "firstName",
+    id: "firstName",
+    name: "firstName",
+    type: "text",
+    autoComplete: "firstName",
+    isRequired: true,
+    placeholder: "Enter your first name",
+  },
+  {
+    labelText: "Last Name",
+    labelFor: "lastName",
+    id: "lastName",
+    name: "lastName",
+    type: "text",
+    autoComplete: "lastName",
+    isRequired: true,
+    placeholder: "Enter your last name",
+  },
   {
     labelText: "Password",
     labelFor: "password",
@@ -186,5 +216,15 @@ export const registerFields = [
     autoComplete: "current-password",
     isRequired: true,
     placeholder: "Enter password",
+  },
+  {
+    labelText: "Confirm Password",
+    labelFor: "confirmPassword",
+    id: "confirmPassword",
+    name: "password",
+    type: "password",
+    autoComplete: "confirmPassword",
+    isRequired: true,
+    placeholder: "Enter password again",
   },
 ];

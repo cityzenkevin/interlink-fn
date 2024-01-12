@@ -15,6 +15,8 @@ import Internships from "../pages/internships/list";
 import Evaluations from "../pages/evaluations/list";
 import Supervisors from "../pages/supervisors/list";
 import CreateInternship from "../pages/internships/create-internship";
+import Applications from "../pages/applications/list";
+import EditInternship from "../pages/internships/edit-internship";
 
 function DashboardRoutes() {
   const [nav, setNav] = useState(false);
@@ -31,6 +33,8 @@ function DashboardRoutes() {
             <Route path="/users" element={<Users />} />
             <Route path="/students" element={<Students />} />
             <Route path="/internships" element={<Internships />} />
+            <Route path="/internships/:id/edit" element={<EditInternship />} />
+            <Route path="/applications" element={<Applications />} />
             <Route path="/internships/create" element={<CreateInternship />} />
             <Route path="/profile/edit" element={<EditProfile />} />
             <Route path="/profile/:id" element={<Profile />} />

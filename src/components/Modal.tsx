@@ -9,7 +9,7 @@ import { useAppSelector } from "../redux/hook";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (e: any) => void;
+  onSubmit?: (e: any) => void;
   title: string;
   children: React.ReactNode;
   styles?: string;
@@ -92,21 +92,23 @@ export default function Modal({
                       Cancel
                     </button>
 
-                    <button
-                      type="submit"
-                      className={`
-                        ${
-                          loading
-                            ? "bg-gray-400 hover:bg-gray-300"
-                            : "bg-primary hover:bg-primaryHover  focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                        }
-                        inline-flex ml-auto justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium
-                         text-white `}
-                      onClick={onSubmit}
-                      disabled={loading}
-                    >
-                      {loading ? "Loading..." : "Submit"}
-                    </button>
+                    {onSubmit && (
+                      <button
+                        type="submit"
+                        className={`
+                          ${
+                            loading
+                              ? "bg-gray-400 hover:bg-gray-300"
+                              : "bg-primary hover:bg-primaryHover  focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                          }
+                          inline-flex ml-auto justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium
+                           text-white `}
+                        onClick={onSubmit}
+                        disabled={loading}
+                      >
+                        {loading ? "Loading..." : "Submit"}
+                      </button>
+                    )}
                   </div>
                 </div>
               </Transition.Child>

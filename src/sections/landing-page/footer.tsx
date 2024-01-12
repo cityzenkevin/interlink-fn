@@ -171,7 +171,7 @@ export default function Footer() {
           </ul>
 
           <p className="text-sm text-gray-400 mt-12">
-            © 2024 InternLink. <br className="hidden lg:block" />
+            © 2024 Internship Offer Management System. <br className="hidden lg:block" />
             All Rights Reserved.
           </p>
         </div>

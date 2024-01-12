@@ -2,8 +2,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import Logo from "../assets/logoText.jpg";
-import Avatar from "../assets/avatar.png";
 import Sidebar from "../layouts/Sidebar";
 import ProfileDropdown from "./ProfileDropdown";
 import { AiOutlineUser } from "react-icons/ai";
@@ -43,13 +41,13 @@ function DashHeader() {
           </div>
           <div className="flex items-center  lg:w-full">
             <Link to="/" className="flex flex-row lg:px-5">
-              <img
+              {/* <img
                 className="cursor-pointer w-60  -mr-20 bg-gray-400"
                 src={Logo}
                 alt="logo"
-              />
+              /> */}
               <h1 className="text-lg mt-2 font-bold font-lexend text-primary dark:text-dark-text-fill">
-                {/* NGO ERP */}
+                Internship Offer Management System
               </h1>
             </Link>
           </div>

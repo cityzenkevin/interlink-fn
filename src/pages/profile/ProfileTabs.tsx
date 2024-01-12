@@ -33,7 +33,6 @@ export default function ProfileTabs({ data }: any) {
       "Account",
     ];
   }
-
   return (
     <div className="flex lg:ml-48 mt-10">
       <>
@@ -55,8 +54,12 @@ export default function ProfileTabs({ data }: any) {
                 </label>
               </div>
             </div>
-            <div className="font-semibold text-base">Rukundo</div>
-            <div className="font-semibold text-gray-600 text-base">Email</div>
+            <div className="font-semibold text-base">
+              {user?.firstname ?? user?.username}
+            </div>
+            <div className="font-semibold text-gray-600 text-base">
+              {user?.email}
+            </div>
           </div>
           {/* Profile tabs option start */}
           <ul

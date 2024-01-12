@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import logo from "../../assets/logo.png";
+import { useEffect, useContext, useState } from "react";
+import { useAppSelector, useAppDispatch } from "../../redux/hook";
 
+import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { registerFields } from "../../constants/formFields";
-// import { login } from "../../redux/actions/auth.action";
 import Input from "../../components/Input";
-// import Alert from "../components/Alert";
+import { UserContext } from "../../hooks/useAuth";
+
+import { toast } from "react-toastify";
+import { createApiData } from "../../redux/features";
 
 type fields = {
   [key: string]: string | number;
@@ -17,46 +19,102 @@ registerFields.forEach((field) => {
   fieldState[field.id as keyof typeof fieldState] = "";
 });
 
-export default function Register() {
-  const [registerState, setRegisterState] = useState(fieldState);
-  const dispatch = useDispatch();
+const Register = () => {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  // const { error, isAuth } = useSelector((state) => state.login);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     if (isAuth) return navigate("../dashboard");
-  //   }, 300);
-  // }, [isAuth]);
+  const { login } = useContext(UserContext);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // const { email, password } = registerState;
-    // return dispatch(login({ email, password }));
+  const [registerState, setRegisterState] = useState(fieldState);
+  const { error, user } = useAppSelector((state) => state.login);
+
+  const { loading } = useAppSelector((state) => state.api);
+
+  useEffect(() => {
+    if (user?.id) {
+      login({ user: { ...user } });
+      navigate("/dashboard/");
+    }
+  }, [user]);
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
+      if (registerState?.password !== registerState?.confirmPassword) {
+        return toast.error("Password does not match");
+      }
+
+      const myFields = {
+        username: registerState.username as string,
+        password: registerState.password as string,
+        email: registerState.email as string,
+        firstName: registerState.firstName as string,
+        lastName: registerState.lastName as string,
+      };
+
+      await dispatch(
+        createApiData({
+          body: myFields,
+          url: "/auth/register",
+        })
+      ).unwrap();
+      setRegisterState(fieldState);
+      toast.success("Registration successful");
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+
+    } catch (error: any) {
+      if (error.message) {
+        if (error.message === "Validation failed") {
+          console.log("validation error", error?.data?.data[0]);
+          return toast.error(
+            `${error?.data?.data[0]?.path} : ${error?.data?.data[0]?.message}`
+          );
+        }
+        toast.error(error.message);
+      } else {
+        console.log("Unknown error:", error);
+        toast.error("An unknown error occurred");
+      }
+    }
   };
 
   return (
-    <div className="min-h-full  h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      
-      <div className="bg-white max-w-md w-full space-y-4 border p-3 rounded shadow-sm">
-      <div className="mx-auto flex  items-center justify-center  ">
-        <img src={logo} alt="" className="w-16" />
-      </div>
+    <div className="bg-gray-200 min-h-full -pb-32  h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="bg-white max-w-xl mt-16 mb-12 w-full space-y-4 border p-6 rounded shadow-md">
         <div className="flex flex-col justify-center items-center ">
-          <div className="flex items-center justify-between mb-4 mt-2d">
-            <div className="text-sm">
-              <span className="font-medium"> Have an account? </span>
-              <a
-                href="/login"
-                className="font-medium text-primary ml-2 hover:primaryHover"
-              >
-                Login
-              </a>
+          <div>
+            <h1 className="block text-gray-700 dark:text-gray-200 text-xl font-bold mb-2 text-center">
+              Register for Internship
+            </h1>
+          </div>
+          <div>
+            <div className="flex my-2 items-center justify-between ">
+              <div>Have an account?</div>
+              <div className="text-sm ml-2">
+                <Link
+                  to="/login"
+                  className="font-medium text-primary hover:primaryHover"
+                >
+                  {t("Login")}
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-        <form className=" space-y-6" onSubmit={handleSubmit}>
-          <div className="">
+        <div
+          className={`bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-2 ${
+            error ? "flex" : "hidden"
+          }`}
+          role="alert"
+        >
+          <span className="block sm:inline">{error}</span>
+        </div>
+        <form className=" space-y-6 " onSubmit={onSubmit}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {registerFields.map((field) => (
               <Input
                 key={field.id}
@@ -80,14 +138,49 @@ export default function Register() {
               />
             ))}
           </div>
+          <div className="flex items-center justify-between ">
+            <div className="text-sm">
+              <Link
+                to="/"
+                className="font-medium text-primary hover:primaryHover"
+              >
+                {t("Go to Home")}
+              </Link>
+            </div>
+          </div>
           <button
             type="submit"
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primaryHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary "
           >
-            Register
+            {loading ? (
+              <svg
+                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                ></path>
+              </svg>
+            ) : (
+              t("Register")
+            )}
           </button>
         </form>
       </div>
     </div>
   );
-}
+};
+
+export default Register;

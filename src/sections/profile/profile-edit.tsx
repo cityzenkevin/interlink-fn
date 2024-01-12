@@ -13,7 +13,7 @@ import { COUNTRIES } from "../../constants/countries";
 
 const fieldState: fields = {};
 
-function EditProfile({ data }: { data: any }) {
+function EditProfile({ data }: { data?: any }) {
   const dispatch = useAppDispatch();
 
   const profile = data;

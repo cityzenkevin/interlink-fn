@@ -35,6 +35,9 @@ export default function InternshipCard({
           url: `/internships/${id}/apply`,
         })
       ).unwrap();
+      toast.success("Application submitted successfully");
+      setCommentModal(false);
+      setComment("");
     } catch (error: any) {
       if (error.message) {
         console.log("Error:", error.message);
@@ -81,14 +84,16 @@ export default function InternshipCard({
             <p className="text-lg font-semibold leading-tight mt-4">{title}</p>
           </Link>
           <div className="flex flex-col md:flex-row md:justify-between">
-            <button
-              value={`/internships/${id}`}
-              onClick={handleApply}
-              className="px-4 py-2 border flex bg-primary text-white  mt-2 hover:bg-white hover:text-primary hover:border-primary duration-100 transition-all ease-in-out"
-            >
-              <AiOutlineArrowRight className="w-6 mt-1" />
-              Apply
-            </button>
+            {user?.role !== "ADMIN" && (
+              <button
+                value={`/internships/${id}`}
+                onClick={handleApply}
+                className="px-4 py-2 border flex bg-primary text-white  mt-2 hover:bg-white hover:text-primary hover:border-primary duration-100 transition-all ease-in-out"
+              >
+                <AiOutlineArrowRight className="w-6 mt-1" />
+                Apply
+              </button>
+            )}
             <Link to={`/internships/${id}`}>
               <button className="px-4 py-2 flex border border-primary bg-white text-primary  mt-2 hover:bg-primary hover:text-white hover:border-primary duration-200 transition-all ease-in-out">
                 <AiFillEye className="w-6 mt-1" />

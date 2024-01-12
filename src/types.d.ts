@@ -43,10 +43,12 @@ interface Internship {
   deadline: Date;
   duration: number;
   durationUnit: string;
-  applications: number;
+  applications: any;
   department: string;
   startDate: Date;
+  endDate: Date;
   created: Date;
+  student?: any;
 }
 
 interface EducationItem {

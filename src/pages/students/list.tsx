@@ -38,7 +38,7 @@ export default function Students() {
   useEffect(() => {
     dispatch(fetchApiData("/student"));
   }, [dispatch]);
-  console.log(data);
+
   const columns = [
     {
       Header: "#",
@@ -54,19 +54,11 @@ export default function Students() {
     },
     {
       Header: "Email",
-      accessor: "email",
-    },
-    {
-      Header: "School",
-      accessor: "school",
-    },
-    {
-      Header: "Department",
-      accessor: "department",
+      accessor: "user.email",
     },
     {
       Header: "Phone Number",
-      accessor: "telephone",
+      accessor: "user.telephone",
     },
     {
       Header: "Action",
