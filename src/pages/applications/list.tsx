@@ -9,14 +9,11 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { userFields } from "../../constants/formFields";
 import RemoveModal from "../../components/RemoveModal";
 import { fields } from "../../types";
-import {
-  deleteApiData,
-  fetchApiData,
-  updateApiData,
-} from "../../redux/features";
+import { fetchApiData, updateApiData } from "../../redux/features";
 import Spinner from "../../components/Spinner";
 import { AiFillEye } from "react-icons/ai";
 import InternshipApplicationModal from "../../sections/internships/InternshipApplicationModal";
+import StudentApplicationModal from "../../sections/applications/StudentApplicationModal";
 
 const fieldState: fields = {};
 
@@ -31,8 +28,10 @@ export default function Applications() {
   let [reject, setReject] = useState(false);
   let [accept, setAccept] = useState(false);
   let [view, setView] = useState(false);
+  let [studentView, setStudentView] = useState(false);
 
-  const [selectedInternship, setSelectedInternship] = useState<any>(fieldState);
+  const [selectedApplication, setSelectedApplication] =
+    useState<any>(fieldState);
 
   const user = JSON.parse(localStorage.getItem("auth") || "{}");
   const data = useAppSelector((state) => state.api);
@@ -40,6 +39,10 @@ export default function Applications() {
 
   const handleRejectModal = () => {
     setReject(!reject);
+  };
+
+  const handleStudentView = () => {
+    setStudentView(!studentView);
   };
 
   const handleAcceptModal = () => {
@@ -124,7 +127,7 @@ export default function Applications() {
             <button
               className="flex text-white cursor-pointer  px-2 py-1 bg-blue-500 hover:text-blue-500 hover:bg-white hover:border-blue-500 border border-blue-500 rounded-md duration-100 transition-all ease-in"
               onClick={() => {
-                setSelectedInternship(row.original);
+                setSelectedApplication(row.original);
                 setView(true);
               }}
             >
@@ -142,7 +145,7 @@ export default function Applications() {
               
               `}
               onClick={() => {
-                setSelectedInternship(row.original);
+                setSelectedApplication(row.original);
                 setAccept(true);
               }}
             >
@@ -158,7 +161,7 @@ export default function Applications() {
                     : "border-red-500 border cursor-pointer bg-red-500 hover:text-red-500 hover:bg-white  hover:border-red-500"
                 }`}
               onClick={() => {
-                setSelectedInternship(row.original);
+                setSelectedApplication(row.original);
                 setReject(true);
               }}
             >
@@ -178,8 +181,8 @@ export default function Applications() {
             <div
               className="flex text-white cursor-pointer  px-2 py-1 bg-primary hover:text-primary hover:bg-white hover:border-primary border border-primary rounded-md duration-100 transition-all ease-in"
               onClick={() => {
-                setSelectedInternship(row.original);
-                setView(true);
+                setSelectedApplication(row.original);
+                setStudentView(true);
               }}
             >
               <AiFillEye className="w-5 mt-1 " />
@@ -196,14 +199,14 @@ export default function Applications() {
   return (
     <div className="mt-28">
       {/* accept internship modal */}
-      {selectedInternship && (
+      {selectedApplication && (
         <RemoveModal
           title="Accept Internship"
           onClose={handleAcceptModal}
           isOpen={accept}
           entity={{
             body: {},
-            url: `/student/applications/${selectedInternship?.id}/accept`,
+            url: `/student/applications/${selectedApplication?.id}/accept`,
           }}
           onDelete={updateApiData}
           onFetch={fetchApiData("/student/applications")}
@@ -212,14 +215,14 @@ export default function Applications() {
       {/* accept internship modal
       
       {/* reject internship modal */}
-      {selectedInternship && (
+      {selectedApplication && (
         <RemoveModal
           title="Reject Internship"
           onClose={handleRejectModal}
           isOpen={reject}
           entity={{
             body: {},
-            url: `/student/applications/${selectedInternship?.id}/reject`,
+            url: `/student/applications/${selectedApplication?.id}/reject`,
           }}
           onDelete={updateApiData}
           onFetch={fetchApiData("/student/applications")}
@@ -231,9 +234,15 @@ export default function Applications() {
       <InternshipApplicationModal
         isOpen={view}
         onClose={handleViewModal}
-        internship={selectedInternship}
+        internship={selectedApplication}
       />
 
+      {/* view student internship application Modal */}
+      <StudentApplicationModal
+        onClose={handleStudentView}
+        isOpen={studentView}
+        application={selectedApplication}
+      />
       {loading ? (
         <div className="ml-[44rem] mt-36">
           <Spinner />

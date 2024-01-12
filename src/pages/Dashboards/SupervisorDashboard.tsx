@@ -4,15 +4,20 @@ import { useAppSelector, useAppDispatch } from "../../redux/hook";
 import Card from "../../components/Card";
 import { fetchApiData } from "../../redux/features";
 
-export default function StudentDashboard() {
+export default function SupervisorDashboard() {
   const dispatch = useAppDispatch();
   const d = useAppSelector((state) => state.api);
 
   const data = [
     {
-      title: "Applications",
+      title: "Students",
       subtitle: `${d?.applications?.length ?? 0}`,
-      description: "Number of applications",
+      description: "Number of student",
+    },
+    {
+      title: "Evaluation",
+      subtitle: `${d?.evaluations?.length ?? 0}`,
+      description: "Number of evaluations",
     },
   ];
 

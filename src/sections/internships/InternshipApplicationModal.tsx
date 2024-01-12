@@ -38,9 +38,9 @@ export default function InternshipApplicationModal({
       isOpen={isOpen}
       onClose={onClose}
       title={internship?.title}
-      styles="max-w-4xl"
+      styles="max-w-3xl"
     >
-      <div className="grid grid-cols-1  md:grid-cols-2 gap-2 max-w-">
+      <div className="grid grid-cols-1 max-w  md:grid-cols-2 gap-2 max-w-">
         {/* Profile tabs option start */}
         <ul
           className="flex justify-start items-start   py-2 font-semibold mb-0 list-none rounded-md"

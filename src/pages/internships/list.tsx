@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 import { AiFillEye } from "react-icons/ai";
 import InternshipApplicationModal from "../../sections/internships/InternshipApplicationModal";
+import StudentApplicationModal from "../../sections/applications/StudentApplicationModal";
 
 const fieldState: fields = {};
 
@@ -30,10 +31,15 @@ export default function Internships() {
   let [isRemoveOpen, setIsRemoveOpen] = useState(false);
   let [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedInternship, setSelectedInternship] = useState<any>(fieldState);
+  const [studentView, setStudentView] = useState(false);
 
   const user = JSON.parse(localStorage.getItem("auth") || "{}");
   const data = useAppSelector((state) => state.api);
   const { loading } = useAppSelector((state) => state.api);
+
+  const handleStudentView = () => {
+    setStudentView(!studentView);
+  };
 
   const handleDeleteModal = () => {
     setIsRemoveOpen(!isRemoveOpen);
@@ -141,7 +147,7 @@ export default function Internships() {
               className="flex text-white cursor-pointer  px-2 py-1 bg-primary hover:text-primary hover:bg-white hover:border-primary border border-primary rounded-md duration-100 transition-all ease-in"
               onClick={() => {
                 setSelectedInternship(row.original);
-                setIsEditOpen(true);
+                setStudentView(true);
               }}
             >
               <AiFillEye className="w-5 mt-1 " />
@@ -178,6 +184,15 @@ export default function Internships() {
       />
 
       {/* Edit internship Modal */}
+
+      {/* View internship application Modal */}
+      {/* view student internship application Modal */}
+      <StudentApplicationModal
+        onClose={handleStudentView}
+        isOpen={studentView}
+        internship={selectedInternship}
+        application={selectedInternship?.application}
+      />
       {user?.role == "ADMIN" && (
         <div className="md:ml-52 mb-2">
           <Link to="/dashboard/internships/create">

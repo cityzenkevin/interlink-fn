@@ -4,10 +4,10 @@ import { useAppSelector, useAppDispatch } from "../../redux/hook";
 import Card from "../../components/Card";
 import { UserContext } from "../../hooks/useAuth";
 import usersApi from "../../services/users.api";
-import HrDashboard from "./HrDashboard";
 import StudentDashboard from "./StudentDashboard";
 import OrganizationDashboard from "./OrganizationDashboard";
 import { fetchApiData } from "../../redux/features";
+import SupervisorDashboard from "./SupervisorDashboard";
 
 export default function Dashboard() {
   const dispatch = useAppDispatch();
@@ -26,8 +26,8 @@ const d = useAppSelector((state) => state.api);
       description: "Number of internships",
     },
     {
-      title: "Evaluations",
-      subtitle: `${users.length ?? 0}`,
+      title: "Applications",
+      subtitle: `${d?.applications?.length ?? 0}`,
       description: "Number of evaluations",
     },
     {
@@ -45,6 +45,7 @@ const d = useAppSelector((state) => state.api);
       dispatch(usersApi.getUsers());
       dispatch(fetchApiData("/student/internship"));
       dispatch(fetchApiData("/users"));
+      dispatch(fetchApiData("/student/applications"));
       dispatch(fetchApiData("/users/supervisors"));
     }
   }, []);
@@ -71,12 +72,10 @@ const d = useAppSelector((state) => state.api);
     case "STUDENT":
       DashboardComponent = <StudentDashboard />;
       break;
-    case "ORGANIZATION":
-      DashboardComponent = <OrganizationDashboard />;
+    case "SUPERVISOR":
+      DashboardComponent = <SupervisorDashboard />;
       break;
-    case "HR":
-      DashboardComponent = <HrDashboard />;
-      break;
+
   
     default:
       break;

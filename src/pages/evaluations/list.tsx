@@ -10,11 +10,10 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { userFields } from "../../constants/formFields";
 import RemoveModal from "../../components/RemoveModal";
 import { fields } from "../../types";
-import usersApi from "../../services/users.api";
-import AddUserModal from "../../sections/users/AddUser";
 import EditUserModal from "../../sections/users/EditUser";
 import { deleteApiData, fetchApiData } from "../../redux/features";
 import Spinner from "../../components/Spinner";
+import NewEvaluationModal from "../../sections/evaluation/new-evaluation";
 
 const fieldState: fields = {};
 userFields.forEach((field) => {
@@ -24,15 +23,17 @@ userFields.forEach((field) => {
 export default function Evaluations() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const user = JSON.parse(localStorage.getItem("auth") || "{}");
+  const data = useAppSelector((state) => state.api);
 
   let [isRegisterOpen, setRegisterIsOpen] = useState(false);
   let [isRemoveOpen, setIsRemoveOpen] = useState(false);
   let [isEditOpen, setIsEditOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<any>(fieldState);
 
-  const { users, success, isLoading, error } = useAppSelector(
-    (state) => state.users
-  );
+  const [selectedEvaluation, seteSelectedEvaluation] =
+    useState<any>(fieldState);
+
+  const { loading } = useAppSelector((state) => state.api);
 
   const handleModal = () => {
     setRegisterIsOpen(!isRegisterOpen);
@@ -47,33 +48,73 @@ export default function Evaluations() {
   };
 
   useEffect(() => {
-    dispatch(usersApi.getUsers());
-  }, [success, error]);
+    dispatch(fetchApiData("/student/evaluation"));
+  }, [dispatch]);
 
   const columns = [
     {
-      Header: `${t("First Name")}`,
-      accessor: "firstName",
+      Header: `${t("Student ")}`,
+      accessor: "",
+      Cell: ({ row }: any) => (
+        <div className="flex flex-col">
+          <span className="text-sm text-gray-500">
+            {row.original?.application?.student?.user?.firstName}{" "}
+            {row.original?.application?.student?.user?.lastName}
+          </span>
+          <span className="text-sm text-gray-500">
+            {row.original?.application?.student?.user?.email}
+          </span>
+        </div>
+      ),
     },
     {
-      Header: `${t("Last Name")}`,
-      accessor: "lastName",
+      Header: "internship Title",
+      accessor: "",
+      Cell: ({ row }: any) => (
+        <div className="flex flex-col">
+          <span className="text-sm text-gray-500">
+            {row.original?.application?.internship?.title}
+          </span>
+        </div>
+      ),
     },
     {
-      Header: "Email",
-      accessor: "email",
+      Header: "Score",
+      accessor: "",
+      Cell: ({ row }: any) => {
+        const score = row.original?.score;
+        switch (true) {
+          case score < 50:
+            return (
+              <div className="flex flex-col">
+                <span className="text-sm  text-red-500">{score}</span>
+              </div>
+            );
+          case score > 50 && score < 70:
+            return (
+              <div className="flex flex-col">
+                <span className="text-sm text-yellow-500">{score}</span>
+              </div>
+            );
+          case score > 70:
+            return (
+              <div className="flex flex-col">
+                <span className="text-sm  text-green-500">{score}</span>
+              </div>
+            );
+        }
+      },
     },
     {
-      Header: "Role",
-      accessor: "role",
-    },
-    {
-      Header: "Gender",
-      accessor: "gender",
-    },
-    {
-      Header: "Phone Number",
-      accessor: "telephone",
+      Header: "Comment ",
+      accessor: "",
+      Cell: ({ row }: any) => (
+        <div className="flex flex-col">
+          <span className="text-sm text-gray-500">
+            {row.original?.comment ?? "No comment"}
+          </span>
+        </div>
+      ),
     },
     {
       Header: "Action",
@@ -83,7 +124,7 @@ export default function Evaluations() {
           {/* <div
             className="flex"
             onClick={() => {
-              setSelectedUser(row.original);
+              seteSelectedEvaluation(row.original);
               setIsEditOpen(true);
             }}
           >
@@ -95,7 +136,7 @@ export default function Evaluations() {
           transition duration-300 ease-in-out
          "
             onClick={() => {
-              setSelectedUser(row.original?.id);
+              seteSelectedEvaluation(row.original?.id);
               handleDeleteModal();
             }}
           >
@@ -109,19 +150,19 @@ export default function Evaluations() {
 
   return (
     <div className="mt-28">
-      {/* Add New user Modal */}
-      <AddUserModal isOpen={isRegisterOpen} onClose={handleModal} />
-      {/* Add New user Modal */}
+      {/*make new evaluation */}
+      <NewEvaluationModal isOpen={isRegisterOpen} onClose={handleModal} />
+      {/*make new evaluation */}
 
-      {/* Remove user modal */}
-      {selectedUser && (
+      {/* Remove evaluation modal */}
+      {selectedEvaluation && (
         <RemoveModal
-          title="Delete user"
+          title="Delete evaluation"
           onClose={handleDeleteModal}
           isOpen={isRemoveOpen}
-          entity={`/users/${selectedUser}`}
+          entity={`/student/evaluation/${selectedEvaluation}`}
           onDelete={deleteApiData}
-          onFetch={fetchApiData("/users")}
+          onFetch={fetchApiData("/student/evaluation")}
         />
       )}
       {/* Remove user modal
@@ -130,28 +171,30 @@ export default function Evaluations() {
       <EditUserModal
         isOpen={isEditOpen}
         onClose={handleEditModal}
-        user={selectedUser}
+        user={selectedEvaluation}
       />
       {/* Edit user Modal */}
 
-      <div className="ml-60 mb-2 flex ">
-        <Button
-          variant="primary"
-          size="md"
-          onClick={handleModal}
-          style=" p-2 flex rounded-sm text-primary border border-primary shadow-sm hover:bg-primary hover:text-white "
-        >
-          <HiPlus className="mt-[2px] w-6 h-5" />
-          Make New Evaluation
-        </Button>
-      </div>
-      {isLoading ? (
+      {user?.role === "SUPERVISOR" && (
+        <div className="ml-60 mb-2 flex ">
+          <Button
+            variant="primary"
+            size="md"
+            onClick={handleModal}
+            style=" p-2 flex rounded-sm text-primary border border-primary shadow-sm hover:bg-primary hover:text-white "
+          >
+            <HiPlus className="mt-[2px] w-6 h-5" />
+            Make New Evaluation
+          </Button>
+        </div>
+      )}
+      {loading ? (
         <div className="ml-[44rem] mt-36">
           <Spinner />
         </div>
       ) : (
         <Table
-          data={users ?? []}
+          data={data?.evaluation ?? []}
           columns={columns}
           title="Evaluation"
           placeholder="Find by first name, last name, or email"

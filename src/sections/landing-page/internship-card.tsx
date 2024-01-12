@@ -32,7 +32,7 @@ export default function InternshipCard({
           body: {
             comment,
           },
-          url: `/internships/${id}/apply`,
+          url: `/student/internship/${id}/apply`,
         })
       ).unwrap();
       toast.success("Application submitted successfully");

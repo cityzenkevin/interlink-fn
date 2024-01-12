@@ -3,7 +3,12 @@ import { NavLink } from "react-router-dom";
 
 import { ChartPieIcon } from "@heroicons/react/24/solid";
 import { CogIcon } from "@heroicons/react/24/outline";
-import { FaFileArchive, FaFileSignature, FaSignOutAlt, FaUserAlt } from "react-icons/fa";
+import {
+  FaFileArchive,
+  FaFileSignature,
+  FaSignOutAlt,
+  FaUserAlt,
+} from "react-icons/fa";
 
 import Tooltip from "../components/ToolTip";
 import { UserContext } from "../hooks/useAuth";
@@ -26,13 +31,6 @@ function Sidebar({ style, toggle }: { style: string; toggle: () => void }) {
         {/* Admin */}
 
         <CheckRole roles={["ADMIN"]}>
-          <SideNavLink
-            onClick={toggle}
-            name="Evaluations"
-            to="/dashboard/evaluations"
-          >
-            <HiDocument className="w-5 mt-1 mr-2  text-dark-text-fill" />
-          </SideNavLink>
           <SideNavLink
             onClick={toggle}
             name="Students"
@@ -70,6 +68,15 @@ function Sidebar({ style, toggle }: { style: string; toggle: () => void }) {
             to="/dashboard/applications"
           >
             <FaFileArchive className="w-5 mt-1 mr-2  text-dark-text-fill" />
+          </SideNavLink>
+        </CheckRole>
+        <CheckRole roles={["ADMIN", "SUPERVISOR", "STUDENT"]}>
+          <SideNavLink
+            onClick={toggle}
+            name="Evaluations"
+            to="/dashboard/evaluations"
+          >
+            <HiDocument className="w-5 mt-1 mr-2  text-dark-text-fill" />
           </SideNavLink>
         </CheckRole>
 
