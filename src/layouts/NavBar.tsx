@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import Logo from '../assets/Logo.png'
+import Logo from "../assets/logo.png";
 
 export default function NavBar() {
   const [scrolling, setScrolling] = useState(false);
@@ -24,10 +24,11 @@ export default function NavBar() {
   return (
     <header className="m z-10">
       <nav
-        className={`bg-gradient-to-r from-gray-50 to-[#a7deef] fixed w-full border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 transition-all duration-75 ${scrolling
-          ? " border-b shadow-sm bg-gray-50 bg-gradient-to-r from-gray-50 to-gray-50"
-          : ""
-          }`}
+        className={`bg-gradient-to-r from-gray-50 to-[#a7deef] fixed w-full border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 transition-all duration-75 ${
+          scrolling
+            ? " border-b shadow-sm bg-gray-50 bg-gradient-to-r from-gray-50 to-gray-50"
+            : ""
+        }`}
       >
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <a href="#" className="flex min-h-12 items-center">
@@ -36,17 +37,15 @@ export default function NavBar() {
               className="relative mr-3 sm:h-9"
               alt="Women of Faith Logo"
             />
-            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-
-            </span>
+            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
           </a>
           <div className="flex items-center lg:order-2">
             <Link
               to="/login"
-              className="inline-flex ml-12 justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg border border-gray-300 bg-primary hover:bg-secondary Hover focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"            >
+              className="inline-flex ml-12 justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg border border-gray-300 bg-primary hover:bg-secondary Hover focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+            >
               Get Started
             </Link>
-
 
             <button
               data-collapse-toggle="mobile-menu-2"

@@ -5,7 +5,7 @@ import DashboardHeader from "../components/DashboardHeader";
 import Sidebar from "../layouts/Sidebar";
 import PrivateRoute from "../utils/ProtectedRoute";
 import Square from "../components/Skeletons/Square";
-import Dashboard from "../pages/dashboards";
+import Dashboard from "../pages/Dashboards";
 import Settings from "../pages/Settings";
 import Profile from "../pages/Profile";
 import EditProfile from "../sections/profile/profile-edit";
